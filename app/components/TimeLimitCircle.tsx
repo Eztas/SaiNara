@@ -1,4 +1,4 @@
-// app/components/MapComponent.tsx
+// app/components/TimeLimitCircle.tsx
 import { useEffect, useState } from "react";
 import { Circle } from "react-leaflet";
 
