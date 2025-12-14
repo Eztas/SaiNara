@@ -9,6 +9,7 @@ type TimeLimitCircleProps = {
 
 export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) => {
   const [radius, setRadius] = useState(500);
+  const [color, setColor] = useState("blue");
 
   // 時間から半径を計算するロジック（親から移動）
   useEffect(() => {
@@ -26,6 +27,16 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
         const remainingMinutes = diffSeconds / 60;
         const calcRadius = remainingMinutes * 20; 
         setRadius(calcRadius);
+
+        // 色の判定
+        if (remainingMinutes >= 30) {
+          setColor("blue");
+        } else if (remainingMinutes >= 15) {
+          // 15分以上 30分未満: 黄色(ゴールド)
+          setColor("#ffd700"); 
+        } else {
+          setColor("red");
+        }
       } else {
         setRadius(0); // 時間切れ
       }
@@ -40,8 +51,8 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
       center={center}
       radius={radius}
       pathOptions={{
-        color: "blue",
-        fillColor: "#00f",
+        color: color,
+        fillColor: color,
         fillOpacity: 0.1,
       }}
     />
