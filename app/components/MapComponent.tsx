@@ -1,47 +1,84 @@
 // app/components/MapComponent.tsx
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const MapComponent = () => {
-  // 近鉄奈良駅の座標
-  const NARA_STATION: [number, number] = [34.6844, 135.8268];
+// Propsの型定義
+type Props = {
+  lat: number;
+  lng: number;
+  targetTime: string; // "1430" 形式
+};
 
-  // ▼ ここが修正ポイント！
-  // コンポーネントが読み込まれた時に、アイコンの画像の場所をCDN（ネット上のURL）に強制的に書き換える
+// ▼ Leafletのアイコンバグ修正
+const fixLeafletIcon = () => {
+  // @ts-ignore
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+    iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  });
+};
+
+// 地図の中心を強制的に移動させるためのコンポーネント
+// (MapContainerのcenterプロパティだけでは再描画時に動かないことがあるため)
+const MapUpdater = ({ center }: { center: [number, number] }) => {
+  const map = useMap();
   useEffect(() => {
-    // Leafletのデフォルトアイコンパス設定を一度削除（これがないとエラーになる）
-    // @ts-ignore
-    delete L.Icon.Default.prototype._getIconUrl;
+    map.flyTo(center, map.getZoom()); // ヌルっと移動
+  }, [center, map]);
+  return null;
+};
 
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-      iconUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-      shadowUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-    });
+const MapComponent = ({ lat, lng, targetTime }: Props) => {
+  const centerPos: [number, number] = [lat, lng];
+  const [radius, setRadius] = useState(500); // デフォルト半径
+
+  useEffect(() => {
+    fixLeafletIcon();
   }, []);
-  // ▲ 修正ポイント終了
+
+  // 時間から半径を計算するロジック
+  useEffect(() => {
+    // ターゲット時刻をDateオブジェクトにする
+    const now = new Date();
+    const target = new Date();
+    const hours = parseInt(targetTime.slice(0, 2), 10);
+    const minutes = parseInt(targetTime.slice(2, 4), 10);
+    
+    target.setHours(hours, minutes, 0, 0);
+
+    const diffSeconds = (target.getTime() - now.getTime()) / 1000;
+    if (diffSeconds > 0) {
+      const remainingMinutes = diffSeconds / 60;
+      const calcRadius = remainingMinutes * 80; 
+      setRadius(Math.max(calcRadius, 50)); // 最低50mは確保
+    } else {
+      setRadius(0); // 時間切れ
+    }
+  }, [targetTime]); // targetTimeが変わるたびに再計算
 
   return (
     <MapContainer
-      center={NARA_STATION}
-      zoom={19}
+      center={centerPos}
+      zoom={16} // 少し引いて全体を見やすく
       style={{ width: "100%", height: "100%" }}
     >
+      <MapUpdater center={centerPos} />
+      
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* 円（結界） */}
+      {/* 結界（円） */}
       <Circle
-        center={NARA_STATION}
-        radius={500}
+        center={centerPos}
+        radius={radius}
         pathOptions={{
           color: "blue",
           fillColor: "#00f",
@@ -49,9 +86,12 @@ const MapComponent = () => {
         }}
       />
 
-      {/* マーカー */}
-      <Marker position={NARA_STATION}>
-        <Popup>近鉄奈良駅（ゴール）</Popup>
+      {/* 目的地マーカー */}
+      <Marker position={centerPos}>
+        <Popup>
+          目的地<br />
+          リミット: {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
+        </Popup>
       </Marker>
     </MapContainer>
   );
