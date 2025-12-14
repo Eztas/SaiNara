@@ -1,10 +1,13 @@
 // app/components/MapComponent.tsx
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
+import { useEffect } from "react";
+
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect, useState } from "react";
+
+import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
 
 // Propsの型定義
 type MapComponentProps = {
@@ -38,31 +41,10 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
 
 const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   const centerPos: [number, number] = [lat, lng];
-  const [radius, setRadius] = useState(500); // デフォルト半径
 
   useEffect(() => {
     fixLeafletIcon();
   }, []);
-
-  // 時間から半径を計算するロジック
-  useEffect(() => {
-    // ターゲット時刻をDateオブジェクトにする
-    const now = new Date();
-    const target = new Date();
-    const hours = parseInt(targetTime.slice(0, 2), 10);
-    const minutes = parseInt(targetTime.slice(2, 4), 10);
-    
-    target.setHours(hours, minutes, 0, 0);
-
-    const diffSeconds = (target.getTime() - now.getTime()) / 1000;
-    if (diffSeconds > 0) {
-      const remainingMinutes = diffSeconds / 60;
-      const calcRadius = remainingMinutes * 20; 
-      setRadius(calcRadius); // 最低50mは確保
-    } else {
-      setRadius(0); // 時間切れ
-    }
-  }, [targetTime]); // targetTimeが変わるたびに再計算
 
   return (
     <MapContainer
@@ -78,16 +60,8 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* 結界（円） */}
-      <Circle
-        center={centerPos}
-        radius={radius}
-        pathOptions={{
-          color: "blue",
-          fillColor: "#00f",
-          fillOpacity: 0.1,
-        }}
-      />
+      {/* 緯度経度と時間で変動するサークル */}
+      <TimeLimitCircle center={centerPos} targetTime={targetTime} />
 
       {/* 目的地マーカー */}
       <Marker position={centerPos}>
