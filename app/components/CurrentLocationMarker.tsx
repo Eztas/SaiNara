@@ -31,7 +31,20 @@ export const CurrentLocationMarker = () => {
         setCurrentPos([latitude, longitude]);
       },
       (error) => {
-        console.error("位置情報エラー:", error.code, error.message);
+        // Code 1: ユーザーが拒否した (PERMISSION_DENIED)
+        // Code 2: 電波状況などで取得不可 (POSITION_UNAVAILABLE)
+        // Code 3: タイムアウト (TIMEOUT)
+        if (error.code === 1) {
+          console.warn("位置情報の利用が許可されていません（マーカー非表示）");
+          return;
+        } else if (error.code === 2) {
+          console.warn("位置情報が利用できない場所にいます（マーカー非表示）");
+          return;
+        } else if (error.code === 3) {
+          console.warn("位置情報取得に時間がかかりすぎています（マーカー非表示）");
+          return;
+        } 
+        console.error("位置情報取得エラー:", error.code, error.message);
       },
       {
         enableHighAccuracy: false, 
