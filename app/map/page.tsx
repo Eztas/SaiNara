@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 // 地図コンポーネント（ssr: falseでSSR無効化）
-const MapComponent = dynamic(() => import("@/app/components/MapComponent"), {
+const MapComponent = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-screen bg-gray-100">

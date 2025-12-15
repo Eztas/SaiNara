@@ -7,10 +7,10 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-import { CurrentLocationMarker } from "@/app/components/marker/CurrentLocationMarker";
-import { DestinationMarker } from "@/app/components/marker/DestinationMarker";
-import { ManualLocationMarker } from "@/app/components/marker/ManualLocationMarker";
-import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
+import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker";
+import { DestinationMarker } from "@/components/marker/DestinationMarker";
+import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
+import { TimeLimitCircle } from "@/components/TimeLimitCircle";
 
 // Propsの型定義
 type MapComponentProps = {
