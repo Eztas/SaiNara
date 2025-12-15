@@ -25,7 +25,7 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
       
       if (diffSeconds > 0) {
         const remainingMinutes = diffSeconds / 60;
-        const calcRadius = remainingMinutes * 20; 
+        const calcRadius = remainingMinutes * 60; 
         setRadius(calcRadius);
 
         // 色の判定
