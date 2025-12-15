@@ -7,8 +7,8 @@ import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 
 // 赤いアイコンの定義（ここだけで使うので移動）
-const currentUserIcon = new L.Icon({
-  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+const currentLocationIcon = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -62,7 +62,7 @@ export const CurrentLocationMarker = () => {
   if (!currentPos) return null;
 
   return (
-    <Marker position={currentPos} icon={currentUserIcon}>
+    <Marker position={currentPos} icon={currentLocationIcon}>
       <Popup>現在地</Popup>
     </Marker>
   );

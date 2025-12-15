@@ -3,11 +3,12 @@
 
 import { useEffect } from "react";
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-import { CurrentLocationMarker } from "@/app/components/CurrentLocationMarker";
+import { CurrentLocationMarker } from "@/app/components/marker/CurrentLocationMarker";
+import { DestinationMarker } from "@/app/components/marker/destinationMarker";
 import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
 
 // Propsの型定義
@@ -41,7 +42,7 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
 };
 
 const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
-  const centerPos: [number, number] = [lat, lng];
+  const destinationPos: [number, number] = [lat, lng];
 
   useEffect(() => {
     fixLeafletIcon();
@@ -49,11 +50,11 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
 
   return (
     <MapContainer
-      center={centerPos}
+      center={destinationPos}
       zoom={16}
       style={{ width: "100%", height: "100%" }}
     >
-      <MapUpdater center={centerPos} />
+      <MapUpdater center={destinationPos} />
       
       {/* OpenStreetMapのタイル使用時の番号とズーム値, クレジット, leaflet側でユーザー操作に合わせて動的に変更できる */}
       <TileLayer
@@ -64,16 +65,11 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       {/* 現在地マーカー */}
       <CurrentLocationMarker />
 
-      {/* 緯度経度と時間で変動するサークル */}
-      <TimeLimitCircle center={centerPos} targetTime={targetTime} />
-
       {/* 目的地マーカー */}
-      <Marker position={centerPos}>
-        <Popup>
-          目的地<br />
-          リミット: {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
-        </Popup>
-      </Marker>
+      <DestinationMarker position={destinationPos} targetTime={targetTime}/>
+
+      {/* 緯度経度と時間で変動するサークル */}
+      <TimeLimitCircle center={destinationPos} targetTime={targetTime} />
 
     </MapContainer>
   );
