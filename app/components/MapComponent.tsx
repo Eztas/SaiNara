@@ -9,6 +9,7 @@ import L from "leaflet";
 
 import { CurrentLocationMarker } from "@/app/components/marker/CurrentLocationMarker";
 import { DestinationMarker } from "@/app/components/marker/destinationMarker";
+import { ManualLocationMarker } from "@/app/components/marker/ManualLocationMarker";
 import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
 
 // Propsの型定義
@@ -62,8 +63,11 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* 現在地マーカー */}
-      <CurrentLocationMarker />
+      {process.env.NODE_ENV === "development" ? (
+        <ManualLocationMarker />
+      ) : (
+        <CurrentLocationMarker />
+      )}
 
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
