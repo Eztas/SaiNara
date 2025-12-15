@@ -8,7 +8,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 import { CurrentLocationMarker } from "@/app/components/marker/CurrentLocationMarker";
-import { DestinationMarker } from "@/app/components/marker/destinationMarker";
+import { DestinationMarker } from "@/app/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/app/components/marker/ManualLocationMarker";
 import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
 
