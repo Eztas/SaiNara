@@ -1,12 +1,13 @@
 // app/components/MapComponent.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+import { CurrentLocationMarker } from "@/app/components/CurrentLocationMarker";
 import { TimeLimitCircle } from "@/app/components/TimeLimitCircle";
 
 // Propsの型定義
@@ -27,17 +28,7 @@ const fixLeafletIcon = () => {
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
     shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
   });
-};
-
-// ▼ 現在地用の赤いアイコンを定義
-const currentUserIcon = new L.Icon({
-  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
+}; 
 
 // 地図の中心を強制的に移動させるためのコンポーネント
 // (MapContainerのcenterプロパティだけでは再描画時に動かないことがあるため)
@@ -52,42 +43,8 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
 const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   const centerPos: [number, number] = [lat, lng];
 
-  // ▼ 現在地の座標を管理するState
-  const [currentPos, setCurrentPos] = useState<[number, number] | null>(null);
-
   useEffect(() => {
     fixLeafletIcon();
-
-    // 現在地を監視して取得する処理
-    if (!navigator.geolocation) {
-      console.error("Geolocation is not supported by this browser.");
-      return;
-    }
-
-    // watchPosition: 移動するたびに位置情報を更新
-    const watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setCurrentPos([latitude, longitude]);
-      },
-      (error) => {
-        console.error(
-          "位置情報エラー詳細:",
-          "Code:", error.code,
-          "Message:", error.message
-        );
-      },
-      {
-        enableHighAccuracy: true, // 高精度モード（GPS優先）
-        timeout: 60000,
-        maximumAge: 0,
-      }
-    );
-
-    // クリーンアップ関数（コンポーネントが消える時に監視を停止）
-    return () => {
-      navigator.geolocation.clearWatch(watchId);
-    };
   }, []);
 
   return (
@@ -104,6 +61,9 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
+      {/* 現在地マーカー */}
+      <CurrentLocationMarker />
+
       {/* 緯度経度と時間で変動するサークル */}
       <TimeLimitCircle center={centerPos} targetTime={targetTime} />
 
@@ -115,12 +75,6 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
         </Popup>
       </Marker>
 
-      {/* ▼ 現在地マーカー（赤：カスタムアイコン） */}
-      {currentPos && (
-        <Marker position={currentPos} icon={currentUserIcon}>
-          <Popup>現在地</Popup>
-        </Marker>
-      )}
     </MapContainer>
   );
 };
