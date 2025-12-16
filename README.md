@@ -1,5 +1,16 @@
 # SaiNara
 
+## 使用技術
+### フロントエンド
+- Next.js
+- TypeScript
+- leaflet: 地図ライブラリ
+- geolocationAPI: 現在地取得
+
+### その他(データなど)
+- [OpenStreetMap](https://www.openstreetmap.org): 地図
+
+
 ## prefix
 ```
 feat: 機能追加
