@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+import { parseCoords, parseTime } from "@/lib/validation"
+
 // 地図コンポーネント（ssr: falseでSSR無効化）
 const MapComponent = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
@@ -27,11 +29,11 @@ function MapContent() {
   const timeParam = searchParams.get("time");
 
   // デフォルト: 近鉄奈良駅
-  const lat = latParam ? parseFloat(latParam) : 34.6841376;
-  const lng = lngParam ? parseFloat(lngParam) : 135.8285414;
+  const lat = parseCoords(latParam, 34.6841376);
+  const lng = parseCoords(lngParam, 135.8285414);
   
   // デフォルト: "1800" (18:00)
-  const targetTime = timeParam || "1800";
+  const targetTime = parseTime(timeParam, "1800");
 
   return (
     <>
