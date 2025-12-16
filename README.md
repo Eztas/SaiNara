@@ -9,7 +9,7 @@
 
 ### その他(データなど)
 - [OpenStreetMap](https://www.openstreetmap.org): 地図
-
+- [奈良 Free Wi-Fiサービス提供エリア図](https://www.pref.nara.jp/51661.htm)
 
 ## prefix
 ```
@@ -30,3 +30,17 @@ change: CSSなどのサイトの見た目やコードの実行順など、improv
 期間も短いので今回は`main`ブランチにマージ
 
 (一応事故った時に最初に色々インストールした`backup`ブランチを用意)
+
+## その他
+このページ（または本リポジトリ）は、
+
+奈良県オープンデータカタログサイトが公開する「奈良 Free Wi-Fiサービス提供エリア図」
+
+を加工して作成しています。
+
+**出典**  
+奈良県オープンデータカタログサイト「奈良 Free Wi-Fiサービス提供エリア図」
+
+クリエイティブ・コモンズ 表示 4.0 国際（CC BY 4.0）
+
+https://creativecommons.org/licenses/by/4.0/deed.ja
