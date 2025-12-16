@@ -63,7 +63,7 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {process.env.NODE_ENV === "development" ? (
+      {process.env.NEXT_PUBLIC_IS_MANUAL === "true" ? (
         <ManualLocationMarker />
       ) : (
         <CurrentLocationMarker />
