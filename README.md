@@ -10,6 +10,8 @@
 ### その他(データなど)
 - [OpenStreetMap](https://www.openstreetmap.org): 地図
 - [奈良 Free Wi-Fiサービス提供エリア図](https://www.pref.nara.jp/51661.htm)
+- [奈良休憩場所+トイレ](https://www3.pref.nara.jp/park/1009.htm)
+- [奈良ベンチリスト](https://suwarumap.com/tag/%E8%BF%91%E9%89%84%E5%A5%88%E8%89%AF)
 
 ## prefix
 ```
