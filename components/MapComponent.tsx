@@ -10,6 +10,7 @@ import L from "leaflet";
 import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker";
 import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
+import { NaraFreeWiFiMarkers } from "@/components/marker/rest/NaraFreeWiFiMarkers";
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
 
 // Propsの型定義
@@ -71,6 +72,8 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
 
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
+
+      <NaraFreeWiFiMarkers />
 
       {/* 緯度経度と時間で変動するサークル */}
       <TimeLimitCircle center={destinationPos} targetTime={targetTime} />
