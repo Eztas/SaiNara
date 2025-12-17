@@ -1,7 +1,7 @@
 // app/components/MapComponent.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -48,7 +48,7 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
 };
 
 const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
-  const destinationPos: [number, number] = [lat, lng];
+  const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
   const [showFilter, setShowFilter] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
