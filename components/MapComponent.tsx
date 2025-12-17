@@ -11,6 +11,8 @@ import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker
 import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
 import { NaraFreeWiFiMarkers } from "@/components/marker/rest/NaraFreeWiFiMarkers";
+import { NaraFreeSeatingMarkers } from "@/components/marker/rest/NaraFreeSeatingMarkers";
+import { NaraPowerCafeMarkers } from "@/components/marker/rest/NaraPowerCafeMarkers"
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
 
 // Propsの型定義
@@ -74,6 +76,10 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
 
       <NaraFreeWiFiMarkers />
+
+      <NaraFreeSeatingMarkers />
+
+      <NaraPowerCafeMarkers />
 
       {/* 緯度経度と時間で変動するサークル */}
       <TimeLimitCircle center={destinationPos} targetTime={targetTime} />
