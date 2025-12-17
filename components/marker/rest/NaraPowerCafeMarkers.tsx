@@ -1,3 +1,4 @@
+// app/components/marker/rest/NaraPowerCafeMarkers.tsx
 "use client";
 
 import { Marker, Popup } from "react-leaflet";

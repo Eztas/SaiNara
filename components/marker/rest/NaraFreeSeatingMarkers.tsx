@@ -1,3 +1,4 @@
+// app/components/marker/rest/NaraFreeSeatingMarkers.tsx
 "use client";
 
 import { useMemo } from "react";
