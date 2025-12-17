@@ -54,7 +54,7 @@ function MapContent() {
 // メインページ
 export default function MapPage() {
   return (
-    <main className="relative w-full h-screen">
+    <main className="relative w-full h-[100dvh]">
       <Suspense fallback={<div>Loading Condition...</div>}>
         <MapContent />
       </Suspense>
