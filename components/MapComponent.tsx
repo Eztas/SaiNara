@@ -1,11 +1,12 @@
 // app/components/MapComponent.tsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { Layers } from "lucide-react";
 
 import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker";
 import { DestinationMarker } from "@/components/marker/DestinationMarker";
@@ -14,6 +15,7 @@ import { NaraFreeWiFiMarkers } from "@/components/marker/rest/NaraFreeWiFiMarker
 import { NaraFreeSeatingMarkers } from "@/components/marker/rest/NaraFreeSeatingMarkers";
 import { NaraPowerCafeMarkers } from "@/components/marker/rest/NaraPowerCafeMarkers"
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
+import { MarkersFilter, FilterState } from "@/components/MarkersFilter";
 
 // Propsの型定義
 type MapComponentProps = {
@@ -48,6 +50,17 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
 const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   const destinationPos: [number, number] = [lat, lng];
 
+  const [showFilter, setShowFilter] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    wifi: true,
+    power: true,
+    seating: true,
+  });
+
+  const toggleFilter = (key: keyof FilterState) => {
+    setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
   useEffect(() => {
     fixLeafletIcon();
   }, []);
@@ -75,11 +88,25 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
 
-      <NaraFreeWiFiMarkers />
+      {filters.wifi && <NaraFreeWiFiMarkers />}
+      {filters.power && <NaraPowerCafeMarkers />}
+      {filters.seating && <NaraFreeSeatingMarkers />}
 
-      <NaraFreeSeatingMarkers />
+      <button
+        onClick={() => setShowFilter(!showFilter)}
+        className="absolute bottom-6 right-4 z-[1000] w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors border border-gray-200"
+        aria-label="地図フィルターを開く"
+      >
+        <Layers size={24} />
+      </button>
 
-      <NaraPowerCafeMarkers />
+      {showFilter && (
+        <MarkersFilter
+          filters={filters}
+          onToggle={toggleFilter}
+          onClose={() => setShowFilter(false)}
+        />
+      )}
 
       {/* 緯度経度と時間で変動するサークル */}
       <TimeLimitCircle center={destinationPos} targetTime={targetTime} />
