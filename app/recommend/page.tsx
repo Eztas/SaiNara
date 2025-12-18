@@ -55,10 +55,11 @@ export default function SpotSearchPage() {
       setReason(data.reason);
 
     } catch (e) {
-      console.error(e);
-      // エラー時はアラートなどで通知し、ローディングを解除
       alert("検索に失敗しました。もう一度お試しください。");
     } finally {
+      if (result === null){
+        alert(`該当するスポットが見つかりませんでした。別の要望でお試しください。${reason}`);
+      }
       setLoading(false);
     }
   };

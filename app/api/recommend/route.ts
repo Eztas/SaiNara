@@ -7,10 +7,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
   
   if (!apiKey) {
-    console.error("DEBUG: API Key is UNDEFINED!");
     return NextResponse.json({ error: "API Key is missing on server" }, { status: 500 });
-  } else {
-    console.log("DEBUG: Key starts with:", apiKey.substring(0, 5) + "...");
   }
   const genAI = new GoogleGenAI({ apiKey });
   try {
@@ -58,13 +55,9 @@ export async function POST(request: Request) {
         throw new Error("Gemini response has no text output");
     }
     const data = JSON.parse(response.text);
-
-    console.log("DEBUG: Gemini response data:", data);
-
     return NextResponse.json(data);
 
   } catch (error) {
-    console.error("API Error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" }, 
       { status: 500 }
