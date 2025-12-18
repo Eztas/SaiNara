@@ -162,7 +162,7 @@ export const MarkersFilter = ({
       {/* アクティブなフィルター数の表示 */}
       <div className="mt-4 pt-3 border-t border-gray-200">
         <p className="text-xs text-gray-500 text-center">
-          {Object.values(markerFilters).filter(Boolean).length}個のデータソース、
+          {Object.values(markerFilters).filter(Boolean).length}個の場所、
           {Object.values(tagFilters).filter(Boolean).length}個の機能で絞込中
         </p>
       </div>
