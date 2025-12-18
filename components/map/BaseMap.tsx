@@ -16,6 +16,7 @@ import { parseCoords, parseTime } from "@/lib/validation"
 
 // Props: 緯度経度・時間・そして「中身(children)」を受け取る
 type BaseMapProps = {
+  center ?: [number, number]; // 中心座標（省略時はURLパラメータから取得）
   children?: ReactNode; // ここにモード別のマーカーやUIが入る
 };
 
@@ -42,7 +43,7 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
-const BaseMap = ({ children }: BaseMapProps) => {
+const BaseMap = ({ center, children }: BaseMapProps) => {
   const searchParams = useSearchParams();
 
   // URLパラメータを取得（なければデフォルト値を設定）
@@ -59,17 +60,19 @@ const BaseMap = ({ children }: BaseMapProps) => {
   const targetTime = parseTime(timeParam, "1800");
   const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
+  const mapCenter = center || destinationPos;
+
   useEffect(() => {
     fixLeafletIcon();
   }, []);
 
   return (
     <MapContainer
-      center={destinationPos}
+      center={mapCenter}
       zoom={16}
       style={{ width: "100%", height: "100%" }}
     >
-      <MapUpdater center={destinationPos} />
+      <MapUpdater center={mapCenter} />
       
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

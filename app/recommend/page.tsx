@@ -1,3 +1,4 @@
+// app/recommend/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -5,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { Search, MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
 
 // 地図コンポーネントを動的インポート
-const ResultMap = dynamic(() => import('@/components/MapComponent'), {
+const BaseMap = dynamic(() => import('@/components/map/BaseMap'), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
@@ -14,6 +15,11 @@ const ResultMap = dynamic(() => import('@/components/MapComponent'), {
     </div>
   ),
 });
+
+const RecommendMarker = dynamic(
+  () => import('@/components/marker/RecommendMarker').then((mod) => mod.RecommendMarker),
+  { ssr: false }
+);
 
 export default function SpotSearchPage() {
   const [input, setInput] = useState('');
@@ -51,13 +57,6 @@ export default function SpotSearchPage() {
     }
   };
 
-  // エンターキーでの送信ハンドラ
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
-      handleSearch();
-    }
-  };
-
   // リセット（検索結果をクリアしてチャット画面に戻る）
   const handleReset = () => {
     setResult(null);
@@ -88,12 +87,9 @@ export default function SpotSearchPage() {
       <div className="relative w-full h-screen overflow-hidden">
         {/* 地図コンポーネント (背景全面) */}
         <div className="absolute inset-0 z-0">
-          <ResultMap
-            lat={result.lat}
-            lng={result.lng}
-            targetTime="1800" // 仮の値
-            recommendSpot={result}
-          />
+            <BaseMap center={[result.lat, result.lng]}>
+                <RecommendMarker spot={result} />
+            </BaseMap>
         </div>
 
         {/* 検索バーと戻るボタン (地図の上に浮かべる) */}
@@ -106,23 +102,6 @@ export default function SpotSearchPage() {
             >
               <ArrowLeft size={20} />
             </button>
-            
-            <div className="flex-1 flex gap-2">
-              <input
-                type="text"
-                className="flex-1 p-3 border-0 shadow-lg rounded-lg focus:ring-2 focus:ring-blue-500 text-black"
-                placeholder="続けて検索..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-              <button
-                onClick={handleSearch}
-                className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition"
-              >
-                <Search size={20} />
-              </button>
-            </div>
           </div>
         </div>
 
@@ -159,7 +138,6 @@ export default function SpotSearchPage() {
           placeholder="例: 鹿を見ながらコーヒーが飲みたい"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
           autoFocus
         />
         <button
