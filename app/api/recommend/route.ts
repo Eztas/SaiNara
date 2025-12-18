@@ -52,6 +52,8 @@ export async function POST(request: Request) {
     }
     const data = JSON.parse(response.text);
 
+    console.log("DEBUG: Gemini response data:", data);
+
     return NextResponse.json(data);
 
   } catch (error) {
