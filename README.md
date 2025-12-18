@@ -7,6 +7,11 @@
 - leaflet: 地図ライブラリ
 - geolocationAPI: 現在地取得
 
+### バックエンド
+- Next.js
+- TypeScript
+- [Gemini API](https://ai.google.dev/gemini-api/docs?hl=ja)
+
 ### その他(データなど)
 - [OpenStreetMap](https://www.openstreetmap.org): 地図
 - [奈良 Free Wi-Fiサービス提供エリア図](https://www.pref.nara.jp/51661.htm)
