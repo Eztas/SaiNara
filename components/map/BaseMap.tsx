@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -11,11 +12,10 @@ import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
 
+import { parseCoords, parseTime } from "@/lib/validation"
+
 // Props: 緯度経度・時間・そして「中身(children)」を受け取る
 type BaseMapProps = {
-  lat: number;
-  lng: number;
-  targetTime: string;
   children?: ReactNode; // ここにモード別のマーカーやUIが入る
 };
 
@@ -42,7 +42,21 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
-const BaseMap = ({ lat, lng, targetTime, children }: BaseMapProps) => {
+const BaseMap = ({ children }: BaseMapProps) => {
+  const searchParams = useSearchParams();
+
+  // URLパラメータを取得（なければデフォルト値を設定）
+  // 例: /map?lat=34.6841376&lng=135.8285414&time=1830
+  const latParam = searchParams.get("lat");
+  const lngParam = searchParams.get("lng");
+  const timeParam = searchParams.get("time");
+
+  // デフォルト: 近鉄奈良駅
+  const lat = parseCoords(latParam, 34.6841376);
+  const lng = parseCoords(lngParam, 135.8285414);
+  
+  // デフォルト: "1800" (18:00)
+  const targetTime = parseTime(timeParam, "1800");
   const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
   useEffect(() => {

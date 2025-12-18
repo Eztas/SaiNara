@@ -42,7 +42,7 @@ function MapContent() {
 
   return (
     <>
-      <BaseMap lat={lat} lng={lng} targetTime={targetTime}>
+      <BaseMap>
         <RestMap />
       </BaseMap>
       <div className="absolute top-4 left-4 z-[1000] bg-white p-3 rounded-lg shadow-md border border-gray-200">
