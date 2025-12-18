@@ -4,15 +4,22 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useMemo } from "react";
+import { Wifi, Zap, Armchair, Toilet } from "lucide-react";
 
-import { FilterMarkerState } from "@/components/MarkersFilter";
+import { FilterMarkerState, FilterTagState, applyTagFilters } from "@/components/MarkersFilter";
 import { naraFreeSeatingSpots } from "@/data/naraFreeSeats"; 
 import { naraFreeWiFiSpots } from '@/data/naraFreeWiFi';
 import { naraPowerSpots } from '@/data/naraPower';
 import { createSeatingIcon, createPowerIcon, createWifiIcon } from '@/components/MarkerIcons'
 import type { RestSpot } from "@/types/map";
 
-const RestMarker = ({restSpots, createIcon}: {restSpots: RestSpot[], createIcon: () => L.DivIcon}) => {
+const RestMarker = ({
+  restSpots, 
+  createIcon
+}: {
+  restSpots: RestSpot[], 
+  createIcon: () => L.DivIcon
+}) => {
   const icon = useMemo(() => createIcon(), []);
 
   return (
@@ -33,25 +40,26 @@ const RestMarker = ({restSpots, createIcon}: {restSpots: RestSpot[], createIcon:
                 </div>
               )}
               
-              <div className="flex justify-center gap-2 text-xs">
+              {/* タグ表示 */}
+              <div className="flex flex-wrap justify-center gap-2 text-xs">
                 {spot.tags.wifi && (
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full flex items-center gap-1">
-                    Free Wi-Fi
+                    <Wifi size={12} /> Wi-Fi
                   </span>
                 )}
                 {spot.tags.power && (
                   <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full flex items-center gap-1">
-                    コンセント
+                    <Zap size={12} /> 充電
                   </span>
                 )}
                 {spot.tags.seating && (
                   <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full flex items-center gap-1">
-                    座席あり
+                    <Armchair size={12} /> 座席
                   </span>
                 )}
                 {spot.tags.toilet && (
-                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full">
-                    トイレ有
+                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full flex items-center gap-1">
+                    <Toilet size={12} /> トイレ
                   </span>
                 )}
               </div>
@@ -63,18 +71,49 @@ const RestMarker = ({restSpots, createIcon}: {restSpots: RestSpot[], createIcon:
   );
 };
 
-export const RestMarkers = ({ filters }: { filters: FilterMarkerState }) => {
-    return (
-        <div>
-            {filters.wifi && (
-                <RestMarker restSpots={naraFreeWiFiSpots} createIcon={createWifiIcon} />
-            )}
-            {filters.power && (
-                <RestMarker restSpots={naraPowerSpots} createIcon={createPowerIcon} />
-            )}
-            {filters.seating && (
-                <RestMarker restSpots={naraFreeSeatingSpots} createIcon={createSeatingIcon} />
-            )}
-        </div>
-    )
-}
+export const RestMarkers = ({ 
+  markerFilters,
+  tagFilters 
+}: { 
+  markerFilters: FilterMarkerState;
+  tagFilters: FilterTagState;
+}) => {
+  // タグフィルターを適用したスポットを計算
+  const filteredWiFiSpots = useMemo(
+    () => applyTagFilters(naraFreeWiFiSpots, tagFilters),
+    [tagFilters]
+  );
+
+  const filteredPowerSpots = useMemo(
+    () => applyTagFilters(naraPowerSpots, tagFilters),
+    [tagFilters]
+  );
+
+  const filteredSeatingSpots = useMemo(
+    () => applyTagFilters(naraFreeSeatingSpots, tagFilters),
+    [tagFilters]
+  );
+
+  return (
+    <>
+      {markerFilters.wifi && (
+        <RestMarker 
+          restSpots={filteredWiFiSpots} 
+          createIcon={createWifiIcon} 
+        />
+      )}
+      {markerFilters.power && (
+        <RestMarker 
+          restSpots={filteredPowerSpots} 
+          createIcon={createPowerIcon} 
+        />
+      )}
+      {markerFilters.seating && (
+        <RestMarker 
+          restSpots={filteredSeatingSpots} 
+          createIcon={createSeatingIcon} 
+        />
+      )}
+    </>
+  );
+};

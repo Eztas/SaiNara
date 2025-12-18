@@ -13,7 +13,11 @@ import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
 import { RestMarkers } from "@/components/marker/rest/RestMarkers";
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
-import { MarkersFilter, FilterMarkerState, FilterTagState } from "@/components/MarkersFilter";
+import { 
+  MarkersFilter, 
+  FilterMarkerState, 
+  FilterTagState 
+} from "@/components/MarkersFilter";
 
 // Propsの型定義
 type MapComponentProps = {
@@ -49,14 +53,26 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
   const [showFilter, setShowFilter] = useState(false);
-  const [filters, setFilters] = useState<FilterMarkerState>({
+  
+  // マーカーフィルター
+  const [markerFilters, setMarkerFilters] = useState<FilterMarkerState>({
     wifi: true,
     power: true,
     seating: true,
   });
+  const toggleMarkerFilter = (key: keyof FilterMarkerState) => {
+    setMarkerFilters((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
-  const toggleFilter = (key: keyof FilterMarkerState) => {
-    setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
+  // タグフィルター
+  const [tagFilters, setTagFilters] = useState<FilterTagState>({
+    wifi: false,
+    power: false,
+    seating: false,
+    toilet: false,
+  });
+  const toggleTagFilter = (key: keyof FilterTagState) => {
+    setTagFilters((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   useEffect(() => {
@@ -86,8 +102,13 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
 
-      <RestMarkers filters={filters} />
+      {/* 休憩用マーカー */}
+      <RestMarkers 
+        markerFilters={markerFilters} 
+        tagFilters={tagFilters}
+      />
 
+      {/* フィルターボタン */}
       <button
         onClick={() => setShowFilter(!showFilter)}
         className="absolute bottom-6 right-4 z-[1000] w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors border border-gray-200"
@@ -98,8 +119,10 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
 
       {showFilter && (
         <MarkersFilter
-          filters={filters}
-          onToggle={toggleFilter}
+          markerFilters={markerFilters}
+          tagFilters={tagFilters}
+          onToggleMarker={toggleMarkerFilter}
+          onToggleTag={toggleTagFilter}
           onClose={() => setShowFilter(false)}
         />
       )}
