@@ -12,7 +12,9 @@ import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker
 import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
 import { RestMarkers } from "@/components/marker/rest/RestMarkers";
+import { RecommendMarker } from '@/components/marker/RecommendMarker';
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
+import { RestSpot } from '@/types/map';
 import { 
   MarkersFilter, 
   FilterMarkerState, 
@@ -24,6 +26,7 @@ type MapComponentProps = {
   lat: number;
   lng: number;
   targetTime: string; // "1430" 形式
+  recommendSpot?: RestSpot;
 };
 
 // Leafletのアイコンバグ修正
@@ -49,7 +52,7 @@ const MapUpdater = ({ center }: { center: [number, number] }) => {
   return null;
 };
 
-const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
+const MapComponent = ({ lat, lng, targetTime, recommendSpot }: MapComponentProps) => {
   const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
   const [showFilter, setShowFilter] = useState(false);
@@ -101,11 +104,16 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
 
-      {/* 休憩用マーカー */}
-      <RestMarkers 
-        markerFilters={markerFilters} 
-        tagFilters={tagFilters}
-      />
+      { recommendSpot ? 
+        <RecommendMarker spot={recommendSpot} /> 
+        : (
+          // 休憩用マーカー
+          <RestMarkers 
+            markerFilters={markerFilters} 
+            tagFilters={tagFilters}
+          />
+        )
+      }
 
       {/* フィルターボタン */}
       <button
