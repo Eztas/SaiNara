@@ -43,7 +43,7 @@ export const MarkersFilter = ({
 
       {/* マーカーフィルター */}
       <div className="mb-4">
-        <h4 className="font-bold text-gray-700 text-sm mb-3">場所で絞り込み</h4>
+        <h4 className="font-bold text-gray-700 text-sm mb-3">場所で絞り込み (OR)</h4>
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
@@ -79,7 +79,7 @@ export const MarkersFilter = ({
 
       {/* タグフィルター（機能） */}
       <div className="border-t border-gray-200 pt-4">
-        <h4 className="font-bold text-gray-700 text-sm mb-3">サービスで絞り込み</h4>
+        <h4 className="font-bold text-gray-700 text-sm mb-3">サービスで絞り込み (AND)</h4>
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
