@@ -1,7 +1,7 @@
 // components/MarkersFilter.tsx
 "use client";
 
-import { Wifi, HandPlatter, Armchair, Toilet, X, Zap } from "lucide-react";
+import { Wifi, Utensils, Armchair, Toilet, X, Zap } from "lucide-react";
 
 // マーカーフィルター（データソース）
 export type FilterMarkerState = {
@@ -49,7 +49,7 @@ export const MarkersFilter = ({
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
               <div className="bg-yellow-100 p-1.5 rounded-full text-yellow-600">
-                <HandPlatter size={16} className="fill-yellow-600" />
+                <Utensils size={16} className="fill-yellow-600" />
               </div>
               <span className="text-sm font-medium">飲食店</span>
             </div>

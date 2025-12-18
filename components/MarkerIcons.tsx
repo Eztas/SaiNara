@@ -1,6 +1,6 @@
 import { renderToString } from "react-dom/server";
 import L from "leaflet";
-import { Armchair, Wifi, HandPlatter } from "lucide-react"; 
+import { Armchair, Wifi, Utensils } from "lucide-react"; 
  
 export const createWifiIcon = (): L.DivIcon => {
   // Tailwindのクラスを当てて、見栄えの良いピンにする
@@ -38,7 +38,7 @@ export const createSeatingIcon = (): L.DivIcon => {
 export const createRestaurantIcon = (): L.DivIcon => {
   const iconHtml = renderToString(
     <div className="relative flex items-center justify-center w-8 h-8 bg-yellow-500 rounded-full shadow-lg border-2 border-white">
-      <HandPlatter className="text-white w-5 h-5 fill-white" /> {/* fill-whiteを入れると雷の中も白くなって視認性UP */}
+      <Utensils className="text-white w-5 h-5 fill-white" /> {/* fill-whiteを入れると雷の中も白くなって視認性UP */}
     </div>
   );
 
