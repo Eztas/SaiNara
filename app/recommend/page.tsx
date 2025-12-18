@@ -73,7 +73,7 @@ export default function SpotSearchPage() {
       <div className="flex flex-col items-center justify-center h-screen bg-gray-50 z-50">
         <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-xl">
           <Loader2 className="h-12 w-12 text-blue-600 animate-spin mb-4" />
-          <h2 className="text-xl font-bold text-gray-800">AIが思考中...</h2>
+          <h2 className="text-xl font-bold text-gray-800">S-AI ナラが検索中...</h2>
           <p className="text-gray-500 mt-2">最適なスポットを探しています</p>
           <div className="mt-4 text-sm text-gray-400">"{input}"</div>
         </div>
@@ -94,17 +94,16 @@ export default function SpotSearchPage() {
             </BaseMap>
         </div>
 
-        {/* 検索バーと戻るボタン (地図の上に浮かべる) */}
-        <div className="absolute top-0 left-0 w-full z-10 p-4 bg-gradient-to-b from-black/50 to-transparent pointer-events-none">
-          <div className="max-w-4xl mx-auto flex gap-2 pointer-events-auto">
-            <button 
-              onClick={handleReset}
-              className="bg-white text-gray-700 p-3 rounded-lg shadow hover:bg-gray-100 transition"
-              title="検索に戻る"
-            >
-              <ArrowLeft size={20} />
-            </button>
-          </div>
+        {/* 戻るボタン */}
+        <div className="absolute top-4 left-4 z-[1000]">
+          <button 
+            onClick={handleReset}
+            className="bg-white text-gray-700 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-gray-50 transition flex items-center justify-center"
+            title="検索に戻る"
+            aria-label="検索画面に戻る"
+          >
+              <ArrowLeft size={24} />
+          </button>
         </div>
 
         {/* (任意) 画面下部にテキスト情報の簡易表示オーバーレイ */}
