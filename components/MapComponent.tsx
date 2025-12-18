@@ -13,7 +13,7 @@ import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
 import { RestMarkers } from "@/components/marker/rest/RestMarkers";
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
-import { MarkersFilter, FilterState } from "@/components/MarkersFilter";
+import { MarkersFilter, FilterMarkerState, FilterTagState } from "@/components/MarkersFilter";
 
 // Propsの型定義
 type MapComponentProps = {
@@ -49,13 +49,13 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   const destinationPos = useMemo<[number, number]>(() => [lat, lng], [lat, lng]);
 
   const [showFilter, setShowFilter] = useState(false);
-  const [filters, setFilters] = useState<FilterState>({
+  const [filters, setFilters] = useState<FilterMarkerState>({
     wifi: true,
     power: true,
     seating: true,
   });
 
-  const toggleFilter = (key: keyof FilterState) => {
+  const toggleFilter = (key: keyof FilterMarkerState) => {
     setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 

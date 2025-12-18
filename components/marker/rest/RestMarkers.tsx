@@ -5,7 +5,7 @@ import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useMemo } from "react";
 
-import { FilterState } from "@/components/MarkersFilter";
+import { FilterMarkerState } from "@/components/MarkersFilter";
 import { naraFreeSeatingSpots } from "@/data/naraFreeSeats"; 
 import { naraFreeWiFiSpots } from '@/data/naraFreeWiFi';
 import { naraPowerSpots } from '@/data/naraPower';
@@ -63,7 +63,7 @@ const RestMarker = ({restSpots, createIcon}: {restSpots: RestSpot[], createIcon:
   );
 };
 
-export const RestMarkers = ({ filters }: { filters: FilterState }) => {
+export const RestMarkers = ({ filters }: { filters: FilterMarkerState }) => {
     return (
         <div>
             {filters.wifi && (
