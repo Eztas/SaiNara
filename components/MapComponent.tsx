@@ -11,9 +11,7 @@ import { Layers } from "lucide-react";
 import { CurrentLocationMarker } from "@/components/marker/CurrentLocationMarker";
 import { DestinationMarker } from "@/components/marker/DestinationMarker";
 import { ManualLocationMarker } from "@/components/marker/ManualLocationMarker";
-import { NaraFreeWiFiMarkers } from "@/components/marker/rest/NaraFreeWiFiMarkers";
-import { NaraFreeSeatingMarkers } from "@/components/marker/rest/NaraFreeSeatingMarkers";
-import { NaraPowerCafeMarkers } from "@/components/marker/rest/NaraPowerCafeMarkers"
+import { RestMarkers } from "@/components/marker/rest/RestMarkers";
 import { TimeLimitCircle } from "@/components/TimeLimitCircle";
 import { MarkersFilter, FilterState } from "@/components/MarkersFilter";
 
@@ -88,9 +86,7 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
       {/* 目的地マーカー */}
       <DestinationMarker position={destinationPos} targetTime={targetTime}/>
 
-      {filters.wifi && <NaraFreeWiFiMarkers />}
-      {filters.power && <NaraPowerCafeMarkers />}
-      {filters.seating && <NaraFreeSeatingMarkers />}
+      <RestMarkers filters={filters} />
 
       <button
         onClick={() => setShowFilter(!showFilter)}

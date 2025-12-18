@@ -8,7 +8,7 @@ type BaseSpot = {
   notes?: string;
 };
 
-type RestTags = {
+export type RestTags = {
   wifi: boolean;
   power: boolean;
   seating: boolean;
