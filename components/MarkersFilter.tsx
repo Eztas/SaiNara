@@ -43,7 +43,7 @@ export const MarkersFilter = ({
 
       {/* マーカーフィルター */}
       <div className="mb-4">
-        <h4 className="font-bold text-gray-700 text-sm mb-3">場所で絞り込み(OR)</h4>
+        <h4 className="font-bold text-gray-700 text-sm mb-3">場所で絞り込み</h4>
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
@@ -79,7 +79,7 @@ export const MarkersFilter = ({
 
       {/* タグフィルター（機能） */}
       <div className="border-t border-gray-200 pt-4">
-        <h4 className="font-bold text-gray-700 text-sm mb-3">機能で絞り込み(AND)</h4>
+        <h4 className="font-bold text-gray-700 text-sm mb-3">サービスで絞り込み</h4>
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
@@ -113,7 +113,7 @@ export const MarkersFilter = ({
 
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
-              <div className="bg-green-50 p-1.5 rounded-full text-green-600">
+              <div className="bg-red-50 p-1.5 rounded-full text-red-600">
                 <Armchair size={16} />
               </div>
               <span className="text-sm">座席有</span>
@@ -122,13 +122,13 @@ export const MarkersFilter = ({
               type="checkbox"
               checked={tagFilters.seating}
               onChange={() => onToggleTag("seating")}
-              className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500"
+              className="w-5 h-5 rounded border-red-300 text-red-600 focus:ring-red-500"
             />
           </label>
 
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
-              <div className="bg-red-50 p-1.5 rounded-full text-red-600">
+              <div className="bg-violet-50 p-1.5 rounded-full text-violet-600">
                 <Toilet size={16} />
               </div>
               <span className="text-sm">トイレ有</span>
@@ -137,7 +137,7 @@ export const MarkersFilter = ({
               type="checkbox"
               checked={tagFilters.toilet}
               onChange={() => onToggleTag("toilet")}
-              className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
+              className="w-5 h-5 rounded border-gray-300 text-violet-600 focus:ring-violet-500"
             />
           </label>
         </div>

@@ -52,12 +52,12 @@ const RestMarker = ({
                   </span>
                 )}
                 {spot.tags.seating && (
-                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full flex items-center gap-1">
+                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full flex items-center gap-1">
                     <Armchair size={12} /> 座席
                   </span>
                 )}
                 {spot.tags.toilet && (
-                  <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full flex items-center gap-1">
+                  <span className="px-2 py-1 bg-violet-100 text-violet-700 rounded-full flex items-center gap-1">
                     <Toilet size={12} /> トイレ
                   </span>
                 )}
