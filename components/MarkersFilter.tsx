@@ -5,8 +5,7 @@ import { Wifi, Utensils, Armchair, Toilet, X, Zap } from "lucide-react";
 
 // マーカーフィルター（データソース）
 export type FilterMarkerState = {
-  wifi: boolean;
-  power: boolean;
+  restaurant: boolean;
   seating: boolean;
 };
 
@@ -48,16 +47,16 @@ export const MarkersFilter = ({
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
-              <div className="bg-yellow-100 p-1.5 rounded-full text-yellow-600">
-                <Utensils size={16} className="fill-yellow-600" />
+              <div className="bg-orange-100 p-1.5 rounded-full text-orange-600">
+                <Utensils size={16} className="fill-orange-600" />
               </div>
               <span className="text-sm font-medium">飲食店</span>
             </div>
             <input
               type="checkbox"
-              checked={markerFilters.power}
-              onChange={() => onToggleMarker("power")}
-              className="w-5 h-5 rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              checked={markerFilters.restaurant}
+              onChange={() => onToggleMarker("restaurant")}
+              className="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
             />
           </label>
 

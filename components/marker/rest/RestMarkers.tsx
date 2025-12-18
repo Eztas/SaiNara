@@ -90,7 +90,7 @@ export const RestMarkers = ({
 
   return (
     <>
-      {markerFilters.power && (
+      {markerFilters.restaurant && (
         <RestMarker 
           restSpots={filteredPowerSpots} 
           createIcon={createRestaurantIcon} 

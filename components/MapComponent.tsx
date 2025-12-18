@@ -56,8 +56,7 @@ const MapComponent = ({ lat, lng, targetTime }: MapComponentProps) => {
   
   // マーカーフィルター
   const [markerFilters, setMarkerFilters] = useState<FilterMarkerState>({
-    wifi: true,
-    power: true,
+    restaurant: true,
     seating: true,
   });
   const toggleMarkerFilter = (key: keyof FilterMarkerState) => {
