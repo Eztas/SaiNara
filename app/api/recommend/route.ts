@@ -33,6 +33,13 @@ export async function POST(request: Request) {
     - 出力はJSONのみとしてください。解説は不要です。
     - ユーザーの意図（「休憩したい」「充電したい」「Wi-Fiが欲しい」など）をタグや説明から推測してください。
 
+    # 出力フォーマット（厳守）
+    以下のJSON形式のみを出力してください。Markdownや解説は不要です。
+
+    {
+      "reason": "ユーザーへの推奨理由（30文字〜50文字程度の日本語。親しみやすい口調で。）",
+      "spot": { ...選んだスポットのデータそのもの... }
+    }
     # スポットデータリスト
     ${JSON.stringify(allNaraRestSpots)}
 
@@ -41,7 +48,7 @@ export async function POST(request: Request) {
     `;
 
     const response = await genAI.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.5-flash", // gemini-3-flash
         contents: prompt,
         config: {
             responseMimeType: "application/json",

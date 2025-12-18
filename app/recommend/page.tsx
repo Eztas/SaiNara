@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { Search, MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
 
 import { RecommendChat } from '@/components/RecommendChat';
+import { RestSpot } from '@/types/map';
 
 // 地図コンポーネントを動的インポート
 const BaseMap = dynamic(() => import('@/components/map/BaseMap'), {
@@ -25,7 +26,8 @@ const RecommendMarker = dynamic(
 
 export default function SpotSearchPage() {
   const [input, setInput] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<RestSpot | null>(null);
+  const [reason, setReason] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
@@ -33,6 +35,7 @@ export default function SpotSearchPage() {
     
     setLoading(true);
     setResult(null);
+    setReason(null);
 
     try {
       const res = await fetch('/api/recommend', {
@@ -48,7 +51,8 @@ export default function SpotSearchPage() {
       }
 
       const data = await res.json();
-      setResult(data);
+      setResult(data.spot);
+      setReason(data.reason);
 
     } catch (e) {
       console.error(e);
@@ -106,15 +110,15 @@ export default function SpotSearchPage() {
           </button>
         </div>
 
-        {/* (任意) 画面下部にテキスト情報の簡易表示オーバーレイ */}
+        {/* 画面下部にテキスト情報の簡易表示オーバーレイ */}
         <div className="absolute bottom-6 left-4 right-4 z-10 pointer-events-none">
             <div className="mx-auto max-w-xl bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-200 pointer-events-auto">
                 <h2 className="font-bold text-lg text-gray-800 flex items-center gap-2">
                   <MapPin className="text-red-500" size={18} />
                   {result.name}
                 </h2>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                  {result.notes}
+                <p className="text-sm text-gray-600 mt-1 max-h-24 overflow-y-auto">
+                  {reason}
                 </p>
             </div>
         </div>
