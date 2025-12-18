@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Search, MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
+import { MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
 
 import { RecommendChat } from '@/components/RecommendChat';
 import { RestSpot } from '@/types/map';
