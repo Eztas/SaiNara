@@ -5,7 +5,7 @@ import { allNaraRestSpots } from "@/lib/allSpots";
 
 export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
-  
+
   if (!apiKey) {
     return NextResponse.json({ error: "API Key is missing on server" }, { status: 500 });
   }
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     `;
 
     const response = await genAI.models.generateContent({
-        model: "gemini-2.5-flash", // gemini-3-flash
+        model: process.env.GEMMINI_AI_MODEL || "gemini-3-flash",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
