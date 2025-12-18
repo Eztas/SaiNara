@@ -8,9 +8,8 @@ import { Wifi, Zap, Armchair, Toilet } from "lucide-react";
 
 import { FilterMarkerState, FilterTagState, applyTagFilters } from "@/components/MarkersFilter";
 import { naraFreeSeatingSpots } from "@/data/naraFreeSeats"; 
-import { naraFreeWiFiSpots } from '@/data/naraFreeWiFi';
 import { naraPowerSpots } from '@/data/naraPower';
-import { createSeatingIcon, createPowerIcon, createWifiIcon } from '@/components/MarkerIcons'
+import { createSeatingIcon, createRestaurantIcon } from '@/components/MarkerIcons'
 import type { RestSpot } from "@/types/map";
 
 const RestMarker = ({
@@ -79,11 +78,6 @@ export const RestMarkers = ({
   tagFilters: FilterTagState;
 }) => {
   // タグフィルターを適用したスポットを計算
-  const filteredWiFiSpots = useMemo(
-    () => applyTagFilters(naraFreeWiFiSpots, tagFilters),
-    [tagFilters]
-  );
-
   const filteredPowerSpots = useMemo(
     () => applyTagFilters(naraPowerSpots, tagFilters),
     [tagFilters]
@@ -96,16 +90,10 @@ export const RestMarkers = ({
 
   return (
     <>
-      {markerFilters.wifi && (
-        <RestMarker 
-          restSpots={filteredWiFiSpots} 
-          createIcon={createWifiIcon} 
-        />
-      )}
       {markerFilters.power && (
         <RestMarker 
           restSpots={filteredPowerSpots} 
-          createIcon={createPowerIcon} 
+          createIcon={createRestaurantIcon} 
         />
       )}
       {markerFilters.seating && (

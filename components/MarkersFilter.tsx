@@ -1,7 +1,7 @@
 // components/MarkersFilter.tsx
 "use client";
 
-import { Wifi, Zap, Armchair, Info, X } from "lucide-react";
+import { Wifi, HandPlatter, Armchair, Toilet, X, Zap } from "lucide-react";
 
 // マーカーフィルター（データソース）
 export type FilterMarkerState = {
@@ -48,25 +48,10 @@ export const MarkersFilter = ({
         <div className="space-y-3">
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
-              <div className="bg-blue-100 p-1.5 rounded-full text-blue-600">
-                <Wifi size={16} />
-              </div>
-              <span className="text-sm font-medium">Free Wi-Fi</span>
-            </div>
-            <input
-              type="checkbox"
-              checked={markerFilters.wifi}
-              onChange={() => onToggleMarker("wifi")}
-              className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-          </label>
-
-          <label className="flex items-center justify-between cursor-pointer group">
-            <div className="flex items-center gap-2 text-gray-700">
               <div className="bg-yellow-100 p-1.5 rounded-full text-yellow-600">
-                <Zap size={16} className="fill-yellow-600" />
+                <HandPlatter size={16} className="fill-yellow-600" />
               </div>
-              <span className="text-sm font-medium">充電スポット</span>
+              <span className="text-sm font-medium">飲食店</span>
             </div>
             <input
               type="checkbox"
@@ -145,7 +130,7 @@ export const MarkersFilter = ({
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
               <div className="bg-red-50 p-1.5 rounded-full text-red-600">
-                <Info size={16} />
+                <Toilet size={16} />
               </div>
               <span className="text-sm">トイレ有</span>
             </div>
