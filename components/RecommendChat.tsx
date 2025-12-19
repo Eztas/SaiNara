@@ -10,7 +10,7 @@ type RecommendChatProps = {
 
 export const RecommendChat = ({ input, setInput, handleSearch }: RecommendChatProps) => {
     return (
-        <div className="flex flex-col items-center justify-center h-[100dvh] bg-gray-50 p-4">
+        <div className="flex flex-col items-center justify-center h-[100dvh] bg-[#f8f5e3] p-4">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 w-full max-w-3xl px-4">
                 {/* 画像ブロック */}
                 <div className="flex-shrink-0">
