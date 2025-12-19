@@ -46,7 +46,7 @@ function MapContent() {
       <BaseMap>
         <RestMap />
       </BaseMap>
-      <MapChange lat={lat} lng={lng} targetTime={targetTime} />
+      <MapChange targetTime={targetTime} />
     </>
   );
 }
