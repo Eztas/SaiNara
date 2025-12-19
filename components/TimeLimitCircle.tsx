@@ -37,6 +37,9 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
 
     // 初回実行
     calcRadiusFromTime();
+    const interval = setInterval(calcRadiusFromTime, 10 * 1000); // 1分ごと
+
+    return () => clearInterval(interval);
   }, [targetTime]); 
 
   return (
