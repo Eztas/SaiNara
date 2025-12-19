@@ -2,9 +2,9 @@
 
 import {
   Armchair,
-  Bath,
   Camera,
   Gift,
+  Toilet,
   Wifi,
   Zap
 } from "lucide-react";
@@ -42,7 +42,7 @@ const MODES = [
       { icon: Wifi, label: "Wi-Fi" },
       { icon: Zap, label: "充電" },
       { icon: Armchair, label: "休憩" },
-      { icon: Bath, label: "トイレ" },
+      { icon: Toilet, label: "トイレ" },
     ],
     color: "bg-blue-50 border-blue-200 text-blue-900",
     activeColor: "ring-2 ring-blue-500 bg-blue-100 border-blue-500",
