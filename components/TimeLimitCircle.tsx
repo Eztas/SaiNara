@@ -12,6 +12,7 @@ type TimeLimitCircleProps = {
 export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) => {
   const [radius, setRadius] = useState(500);
   const [color, setColor] = useState("blue");
+  const [pulse, setPulse] = useState(0);
 
   // 時間から半径を計算するロジック（親から移動）
   useEffect(() => {
@@ -37,10 +38,21 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
 
     // 初回実行
     calcRadiusFromTime();
-    const interval = setInterval(calcRadiusFromTime, 10 * 1000); // 1分ごと
+    const interval = setInterval(calcRadiusFromTime, 10 * 3000); // 30秒ごと
 
     return () => clearInterval(interval);
   }, [targetTime]); 
+
+  useEffect(() => {
+    let t = 0;
+
+    const pulseInterval = setInterval(() => {
+      t += 0.15; // ← 脈動スピード（心拍）
+      setPulse((Math.sin(t) + 1) / 2); // 0〜1
+    }, 100); // 100ms更新（滑らか）
+
+    return () => clearInterval(pulseInterval);
+  }, []);
 
   return (
     <Circle
@@ -49,7 +61,9 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
       pathOptions={{
         color: color,
         fillColor: color,
-        fillOpacity: 0.1,
+        fillOpacity: 0.08 + pulse * 0.05, // ← 呼吸
+        opacity: 0.6 + pulse * 0.4,       // ← 鼓動
+        weight: 2 + pulse * 2,            // ← 線の太さが脈打つ
       }}
     />
   );
