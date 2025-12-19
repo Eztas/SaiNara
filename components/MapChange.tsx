@@ -19,9 +19,11 @@ export const MapChange = ({ targetTime }: { targetTime: string }) => {
       {/* 1. 情報パネル（分離してスッキリさせる） */}
       <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200 w-fit">
         <div className="flex items-baseline gap-2">
-          <h1 className="text-sm font-bold text-gray-800">Ψナラ</h1>
+          <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
+            LIMIT
+          </span>
           <span className="text-xs font-bold text-red-500">
-            Limit {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
+            {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
           </span>
         </div>
       </div>
