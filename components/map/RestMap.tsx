@@ -1,4 +1,4 @@
-// app/components/map/layer/BrowseMapLayer.tsx
+// components/map/RestMap.tsx
 "use client";
 
 import { useState } from "react";

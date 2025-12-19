@@ -1,4 +1,4 @@
-// app/components/BaseMap.tsx
+// components/map/BaseMap.tsx
 "use client";
 
 import { useEffect, useMemo, ReactNode } from "react";
