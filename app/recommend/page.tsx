@@ -128,7 +128,7 @@ export default function SpotSearchPage() {
   // ----------------------------------------------------------------
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-50 z-50">
+      <div className="flex flex-col items-center justify-center h-[100dvh] bg-gray-50 z-50">
         <div className="flex flex-col items-center p-8 bg-white rounded-2xl shadow-xl">
           <Loader2 className="h-12 w-12 text-blue-600 animate-spin mb-4" />
           <h2 className="text-xl font-bold text-gray-800">S-AI ナラが検索中...</h2>
@@ -144,7 +144,7 @@ export default function SpotSearchPage() {
   // ----------------------------------------------------------------
   if (result && result.lat && result.lng) {
     return (
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-[100dvh] overflow-hidden">
         {/* 地図コンポーネント (背景全面) */}
         <div className="absolute inset-0 z-0">
             <BaseMap center={[result.lat, result.lng]}>

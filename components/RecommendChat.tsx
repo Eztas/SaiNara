@@ -10,7 +10,7 @@ type RecommendChatProps = {
 
 export const RecommendChat = ({ input, setInput, handleSearch }: RecommendChatProps) => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-50 p-4">
+        <div className="flex flex-col items-center justify-center h-[100dvh] bg-gray-50 p-4">
             <div className="w-full max-w-2xl text-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-800 mb-2">S-AI ナラ</h1>
                 <p className="text-gray-500">あなたの要望に合わせて、SuperなAIが奈良のスポットをご提案します</p>
