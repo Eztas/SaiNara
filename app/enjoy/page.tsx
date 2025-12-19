@@ -6,8 +6,8 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
-import { parseCoords, parseTime } from "@/lib/validation"
 import { MapChange } from "@/components/MapChange";
+import { parseCoords, parseTime } from "@/lib/validation";
 
 // 地図コンポーネント（ssr: falseでSSR無効化）
 const BaseMap = dynamic(() => import("@/components/map/BaseMap"), {
@@ -46,7 +46,7 @@ function MapContent() {
       <BaseMap>
         <EnjoyMap />
       </BaseMap>
-      <MapChange lat={lat} lng={lng} targetTime={targetTime} />
+      <MapChange targetTime={targetTime} />
     </>
   );
 }
