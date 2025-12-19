@@ -96,7 +96,7 @@ export const EnjoyMarkers = ({
     () => applyTagFilters(naraSouvenirSpots, tagFilters),
     [tagFilters]
   );
-  const filteredightSeeingSpots  = useMemo(
+  const filteredSightSeeingSpots  = useMemo(
     () => applyTagFilters(naraSightSeeingSpots, tagFilters),
     [tagFilters]
   );
@@ -111,7 +111,7 @@ export const EnjoyMarkers = ({
       )}
       {markerFilters.sightseeing && (
         <EnjoyMarker 
-          enjoySpots={filteredightSeeingSpots} 
+          enjoySpots={filteredSightSeeingSpots} 
           createIcon={createLandmarkIcon} 
         />
       )}
