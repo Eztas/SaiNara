@@ -1,4 +1,4 @@
-// app/map/page.tsx
+// app/enjoy/page.tsx
 "use client";
 
 // 普通のimportではなく、dynamic importを使うのが鉄則
@@ -19,8 +19,8 @@ const BaseMap = dynamic(() => import("@/components/map/BaseMap"), {
   ),
 });
 
-const RestMap = dynamic(
-  () => import("@/components/map/RestMap").then((mod) => mod.RestMap),
+const EnjoyMap = dynamic(
+  () => import("@/components/map/EnjoyMap").then((mod) => mod.EnjoyMap),
   { ssr: false }
 );
 
@@ -44,7 +44,7 @@ function MapContent() {
   return (
     <>
       <BaseMap>
-        <RestMap />
+        <EnjoyMap />
       </BaseMap>
       <MapChange lat={lat} lng={lng} targetTime={targetTime} />
     </>

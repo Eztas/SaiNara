@@ -167,4 +167,33 @@ export const naraFreeSeatingSpots: RestSpot[] = [
     },
     notes: "少し屋根があるので、雨が凌げるかも",
   },
+  {
+    id: "12",
+    name: "奈良公園バスターミナル",
+    address: "奈良県奈良市登大路町76",
+    lat: 34.68516,
+    lng: 135.83425,
+    category: "rest",
+    tags: {
+      wifi: true,
+      power: false,
+      seating: true,
+      toilet: true,
+    },
+  },
+  {
+    id: "13",
+    name: "奈良市観光センター「NARANICLE（ナラニクル）」",
+    address: "奈良県奈良市上三条町23-4",
+    lat: 34.682259,
+    lng: 135.825851,
+    notes: "観光案内のほか、観光客・市民向けのワークショップやセミナーを随時開催",
+    category: "rest",
+    tags: {
+      wifi: true,
+      power: false,
+      seating: true,
+      toilet: true,
+    },
+  },
 ];
