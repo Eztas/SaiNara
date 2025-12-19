@@ -1,7 +1,7 @@
 // app/recommend/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from "next/navigation";
 import dynamic from 'next/dynamic';
 import { MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
@@ -26,12 +26,36 @@ const RecommendMarker = dynamic(
   { ssr: false }
 );
 
+const STORAGE_KEY = 'recommend_spot_data';
+
 export default function SpotSearchPage() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState<RestSpot | null>(null);
   const [reason, setReason] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // windowオブジェクトが存在するか確認（Next.jsのお作法）
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        try {
+          const parsed = JSON.parse(savedData);
+          // データの中身がちゃんとしているか簡易チェック
+          if (parsed.result && parsed.reason) {
+            setResult(parsed.result);
+            setReason(parsed.reason);
+            setInput(parsed.input || '');
+          }
+        } catch (e) {
+          console.error("保存されたデータの読み込みに失敗しました", e);
+          // 壊れたデータが入っている場合は削除しておく
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    }
+  }, []);
 
   const handleSearch = async () => {
     if (!input.trim()) return;
@@ -75,6 +99,11 @@ export default function SpotSearchPage() {
       if (data.spot) {
         setResult(data.spot);
         setReason(data.reason);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          result: data.spot,
+          reason: data.reason,
+          input: input
+        }));
       } else {
         // スポットが見つからなかった場合（APIが空を返した、徒歩範囲以外の場合など）
         alert(`該当するスポットが見つかりませんでした。別の要望でお試しください。理由: ${data.reason || ''}`);
@@ -91,6 +120,7 @@ export default function SpotSearchPage() {
   const handleReset = () => {
     setResult(null);
     setInput('');
+    localStorage.removeItem(STORAGE_KEY);
   };
 
   // ----------------------------------------------------------------
