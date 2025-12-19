@@ -48,14 +48,23 @@ const MODES = [
     activeColor: "ring-2 ring-blue-500 bg-blue-100 border-blue-500",
   },
   {
-    id: "recommend",
-    name: "AIおすすめモード",
-    path: "/recommend",
-    description: "AIがおすすめのスポットを表示",
+    id: "enjoy",
+    name: "散策モード",
+    path: "/enjoy",
+    description: "お土産や観光スポットを地図で探索",
     features: [
       { icon: Gift, label: "お土産" },
       { icon: Camera, label: "映え" },
     ],
+    color: "bg-pink-50 border-pink-200 text-pink-900",
+    activeColor: "ring-2 ring-pink-500 bg-pink-100 border-pink-500",
+  },
+  {
+    id: "recommend",
+    name: "AIおすすめモード",
+    path: "/recommend",
+    description: "AIがおすすめのスポットを表示",
+    features: [],
     color: "bg-orange-50 border-orange-200 text-orange-900",
     activeColor: "ring-2 ring-orange-500 bg-orange-100 border-orange-500",
   },
@@ -105,14 +114,14 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-[100dvh] flex-col items-center justify-center bg-[#f8f5e3] px-4 py-6 font-sans text-stone-800">
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-[#f8f5e3] px-4 py-6 font-sans text-stone-800">
       <main className="w-full max-w-md space-y-8 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm ring-1 ring-stone-900/5 transition-all">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-3xl font-bold tracking-tight text-stone-900">
-            Ψナラ
+          <h1 className="text-4xl font-bold tracking-tight text-stone-900">
+            Ψナラ 👋
           </h1>
-          <p className="text-center text-stone-600">
-            奈良旅行にΨ高の<br/>ラストワンマイルを
+          <p className="text-center text-stone-600 font-semibold">
+            奈良旅行にΨ高のラストワンマイルを
           </p>
         </div>
 
@@ -163,16 +172,18 @@ export default function Home() {
                   <div className="mb-1 flex w-full items-center justify-between">
                     <span className="text-lg font-bold">{mode.name}</span>
                   </div>
-                  <p className="mb-3 text-sm opacity-80">{mode.description}</p>
+                  <p className={`text-sm opacity-80 ${mode.features.length > 0 ? "mb-3" : ""}`}>{mode.description}</p>
 
-                  <div className="flex flex-wrap gap-2">
-                    {mode.features.map((feature, idx) => (
-                      <span key={idx} className="flex items-center gap-1 rounded-full bg-white/60 px-2 py-1 text-xs font-medium backdrop-blur-sm">
-                        <feature.icon size={15} />
-                        {feature.label}
-                      </span>
-                    ))}
-                  </div>
+                  {mode.features.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {mode.features.map((feature, idx) => (
+                        <span key={idx} className="flex items-center gap-1 rounded-full bg-white/60 px-2 py-1 text-xs font-medium backdrop-blur-sm">
+                          <feature.icon size={15} />
+                          {feature.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
