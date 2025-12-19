@@ -23,7 +23,7 @@ export const naraSightSeeingSpots: EnjoySpot[] = [
     notes: "奈良の中心地にある商店街。伝統的なお土産から最新のスイーツまで幅広く揃う。",
     category: "enjoy",
     url: "https://higashimuki.jp/shop_jp.php",
-    time: ["0000", "2400"],
+    time: ["0000", "2359"],
     tags: { wifi: true, free: true, indoor: true,},
   },
  {
@@ -55,7 +55,7 @@ export const naraSightSeeingSpots: EnjoySpot[] = [
     lat: 34.68194383965448,
     lng: 135.83042516054292,
     category: "enjoy",
-    time: ["0000", "2400"],
+    time: ["0000", "2359"],
     tags: { wifi: false, free: true, indoor: false,},
   },
   {
