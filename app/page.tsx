@@ -167,7 +167,7 @@ export default function Home() {
 
                   <div className="flex flex-wrap gap-2">
                     {mode.features.map((feature, idx) => (
-                      <span key={idx} className="flex items-center gap-1 rounded-full bg-white/60 px-2 py-1 text-[12px] font-medium backdrop-blur-sm">
+                      <span key={idx} className="flex items-center gap-1 rounded-full bg-white/60 px-2 py-1 text-xs font-medium backdrop-blur-sm">
                         <feature.icon size={15} />
                         {feature.label}
                       </span>
