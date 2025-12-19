@@ -1,7 +1,7 @@
 // app/api/recommend/route.ts
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from "@google/genai";
-import { allNaraRestSpots } from "@/lib/allSpots";
+import { allNaraRestSpots } from "@/data/allSpots";
 
 export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
