@@ -31,16 +31,27 @@ const EnjoyMarker = ({
         >
           <Popup>
             <div className="text-center min-w-[200px]">
-              <strong className="block text-lg mb-1">{spot.name}</strong>
+              {spot.url ? (
+                <a
+                    href={spot.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-lg mb-1 font-bold text-blue-600 hover:underline"
+                >
+                    {spot.name}
+                </a>
+                ) : (
+                <strong className="block text-lg mb-1">{spot.name}</strong>
+            )}
               <p className="text-sm text-gray-600 mb-2">{spot.address}</p>
               {spot.notes && (
                 <div className="bg-gray-50 p-2 rounded text-xs text-gray-700 mb-2 text-left">
                   {spot.notes}
                 </div>
               )}
-              {spot.url && (
+              {spot.time && (
                 <div className="bg-gray-50 p-2 rounded text-xs text-gray-700 mb-2 text-left">
-                  {spot.url}
+                  {spot.time[0].slice(0, 2)+":"+spot.time[0].slice(2, 4)} 〜 {spot.time[1].slice(0, 2)+":"+spot.time[1].slice(2, 4)}
                 </div>
               )}
               
