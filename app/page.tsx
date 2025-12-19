@@ -105,7 +105,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f5e3] px-4 font-sans text-stone-800">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f5e3] px-4 py-6 font-sans text-stone-800">
       <main className="w-full max-w-md space-y-8 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm ring-1 ring-stone-900/5 transition-all">
         <div className="flex flex-col items-center gap-2">
           {/* Logo or Title Area */}
