@@ -70,10 +70,6 @@ export const MapChange = ({ targetTime }: { targetTime: string }) => {
 
       {/* 右側：切り替えボタン */}
       <div className="flex items-center gap-2">
-        {/* 今の状態を文字で補足（不要なら削除可） */}
-        <span className="text-[10px] font-bold text-gray-400">
-            {isEnjoyMode ? "散策" : "休憩"}
-        </span>
         <ModeToggle isEnjoyMode={isEnjoyMode} nextUrl={nextUrl} />
       </div>
 
