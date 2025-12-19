@@ -24,3 +24,26 @@ export const parseTime = (time: string | null | undefined, defaultTime: string =
 
   return timeRegex.test(time) ? time : defaultTime;
 };
+
+// マーカー表示のバリデーション、営業時間内ならtrueを返す
+export const isOpenNow = (time?: [string, string]) => {
+  if (!time || time.length !== 2) return true; // 営業時間不明なら表示
+
+  const [start, end] = time;
+
+  const now = new Date();
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const startMinutes =
+    parseInt(start.slice(0, 2)) * 60 + parseInt(start.slice(2, 4));
+  const endMinutes =
+    parseInt(end.slice(0, 2)) * 60 + parseInt(end.slice(2, 4));
+
+  // 通常ケース（9:00〜17:00）
+  if (startMinutes <= endMinutes) {
+    return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+  }
+
+  // 日付またぎケース（22:00〜02:00）
+  return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+};

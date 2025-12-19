@@ -11,6 +11,7 @@ import { naraSouvenirSpots } from "@/data/naraSouvenirSpots";
 import { naraSightSeeingSpots } from "@/data/naraSightSeeingSpots"; 
 import { createGiftIcon, createLandmarkIcon } from '@/components/MarkerIcons'
 import type { EnjoySpot } from "@/types/map";
+import { isOpenNow } from "@/lib/validation";
 
 const EnjoyMarker = ({
   enjoySpots, 
@@ -23,7 +24,9 @@ const EnjoyMarker = ({
 
   return (
     <>
-      {enjoySpots.map((spot) => (
+      {enjoySpots
+      .filter((spot) => isOpenNow(spot.time))
+      .map((spot) => (
         <Marker
           key={spot.name}
           position={[spot.lat, spot.lng]}
