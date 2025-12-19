@@ -1,4 +1,4 @@
-// app/map/page.tsx
+// app/rest/page.tsx
 "use client";
 
 // 普通のimportではなく、dynamic importを使うのが鉄則
