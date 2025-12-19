@@ -108,19 +108,11 @@ export default function Home() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#f8f5e3] px-4 py-6 font-sans text-stone-800">
       <main className="w-full max-w-md space-y-8 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm ring-1 ring-stone-900/5 transition-all">
         <div className="flex flex-col items-center gap-2">
-          {/* Logo or Title Area */}
-          <div className="relative h-24 w-24">
-             {/* Placeholder for a cute smooth icon */}
-             <div className="absolute inset-0 animate-pulse rounded-full bg-orange-100 opacity-50"></div>
-             <div className="flex h-full w-full items-center justify-center rounded-full bg-orange-50 text-3xl">
-                🦌
-             </div>
-          </div>
           <h1 className="text-3xl font-bold tracking-tight text-stone-900">
             Ψナラ
           </h1>
           <p className="text-center text-stone-600">
-            奈良旅行の最後を<br/>最高に締めくくろう
+            奈良旅行にΨ高の<br/>ラストワンマイルを
           </p>
         </div>
 
@@ -158,9 +150,6 @@ export default function Home() {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-bold text-stone-500">
-              表示するスポット
-            </label>
             <div className="flex flex-col gap-3">
               {MODES.map((mode) => (
                 <button
