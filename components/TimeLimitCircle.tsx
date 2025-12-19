@@ -12,60 +12,73 @@ type TimeLimitCircleProps = {
 export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) => {
   const [radius, setRadius] = useState(500);
   const [color, setColor] = useState("blue");
-  const [pulse, setPulse] = useState(0);
+  const [remainingMinutes, setRemainingMinutes] = useState(30);
+  const [ripples, setRipples] = useState<number[]>([0, 0.33, 0.66]); // 3つの波紋
 
-  // 時間から半径を計算するロジック（親から移動）
   useEffect(() => {
     const calcRadiusFromTime = () => {
-      // ゆっくり歩く、直線距離でないことを考慮して、歩行速度を50m/分に設定
-      const {remainingMinutes, calcRadius} = calculateRadiusFromTime(targetTime, 50);
+      const {remainingMinutes: mins, calcRadius} = calculateRadiusFromTime(targetTime, 50);
       
-      if (remainingMinutes > 0) {
+      if (mins > 0) {
         setRadius(calcRadius);
-        // 色の判定
-        if (remainingMinutes >= 30) {
+        setRemainingMinutes(mins);
+        if (mins >= 30) {
           setColor("blue");
-        } else if (remainingMinutes >= 15) {
-          // 15分以上 30分未満: 黄色(ゴールド)
+        } else if (mins >= 15) {
           setColor("#ffd700"); 
         } else {
           setColor("red");
         }
       } else {
-        setRadius(0); // 時間切れ
+        setRadius(0);
       }
     };
 
-    // 初回実行
     calcRadiusFromTime();
-    const interval = setInterval(calcRadiusFromTime, 10 * 3000); // 30秒ごと
+    const interval = setInterval(calcRadiusFromTime, 10 * 1000);
 
     return () => clearInterval(interval);
   }, [targetTime]); 
 
+  // 波紋アニメーション（時間が迫るほど速く）
   useEffect(() => {
-    let t = 0;
+    const speed = remainingMinutes < 15 ? 30 : remainingMinutes < 30 ? 50 : 80;
+    
+    const rippleInterval = setInterval(() => {
+      setRipples(prev => prev.map(r => (r + 0.01) % 1));
+    }, speed);
 
-    const pulseInterval = setInterval(() => {
-      t += 0.15; // ← 脈動スピード（心拍）
-      setPulse((Math.sin(t) + 1) / 2); // 0〜1
-    }, 100); // 100ms更新（滑らか）
-
-    return () => clearInterval(pulseInterval);
-  }, []);
+    return () => clearInterval(rippleInterval);
+  }, [remainingMinutes]);
 
   return (
-    <Circle
-      center={center}
-      radius={radius}
-      pathOptions={{
-        color: color,
-        fillColor: color,
-        fillOpacity: 0.08 + pulse * 0.05, // ← 呼吸
-        opacity: 0.6 + pulse * 0.4,       // ← 鼓動
-        weight: 2 + pulse * 2,            // ← 線の太さが脈打つ
-      }}
-    />
+    <>
+      {/* メインの円 */}
+      <Circle
+        center={center}
+        radius={radius}
+        pathOptions={{
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.1,
+          weight: 2,
+        }}
+      />
+      
+      {/* 波紋エフェクト */}
+      {ripples.map((phase, i) => (
+        <Circle
+          key={i}
+          center={center}
+          radius={radius * (0.7 + 0.3 * phase)} // 70%から100%に拡大
+          pathOptions={{
+            color: color,
+            fillColor: "transparent",
+            weight: 2,
+            opacity: 0.5 * (1 - phase), // 外に行くほど薄く
+          }}
+        />
+      ))}
+    </>
   );
-
 };
