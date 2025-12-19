@@ -1,0 +1,51 @@
+// data/naraSightseeingSpots.ts
+import { EnjoySpot } from '@/types/map'; // 型定義のパスに合わせて変更してください
+
+export const souvenirSpots: EnjoySpot[] = [
+    {
+    id: "1",
+    name: "小西さくら通り商店街",
+    address: "奈良県奈良市角振町28",
+    lat: 34.68362,
+    lng: 135.827469,
+    notes: "地元の人向けの商店街, 奈良の様子を知るならここ。",
+    category: "enjoy",
+    url: "http://www.nara-konishi.com/",
+    time: ["0830", "2200"],
+    tags: { wifi: true, free: true, indoor: false,},
+  },
+  {
+    id: "2",
+    name: "東向き商店街",
+    address: "奈良県奈良市東向中町",
+    lat: 34.680302,
+    lng: 135.828979,
+    notes: "奈良の中心地にある商店街。伝統的なお土産から最新のスイーツまで幅広く揃う。",
+    category: "enjoy",
+    url: "https://higashimuki.jp/shop_jp.php",
+    time: ["0000", "2400"],
+    tags: { wifi: true, free: true, indoor: true,},
+  },
+ {
+    id: "3",
+    name: "もちいどの商店街",
+    address: "奈良県奈良市餅飯殿町12",
+    lat: 34.680325,
+    lng: 135.829163,
+    notes: "かき氷の聖地でありながら、下町の雰囲気も楽しめ、個人経営の店も多い",
+    category: "enjoy",
+    url: "https://www.mochiidono.com/",
+    time: ["1000", "1900"],
+    tags: { wifi: true, free: true, indoor: true,},
+  },
+  {
+    id: "4",
+    name: "春日参道",
+    address: "奈良県奈良市高畑町",
+    lat: 34.676941,
+    lng: 135.838379,
+    category: "enjoy",
+    url: "",
+    tags: { wifi: true, free: true, indoor: false,},
+  },
+]

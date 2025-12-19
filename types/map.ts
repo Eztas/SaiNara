@@ -32,5 +32,5 @@ export type EnjoySpot = BaseSpot & {
   category: "enjoy";
   tags: EnjoyTags;
   url?: string;
-  time: [string, string]; // 開始時間と終了時間
+  time?: [string, string]; // 開始時間と終了時間
 };
