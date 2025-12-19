@@ -20,11 +20,6 @@ export const ModeToggle = ({ isEnjoyMode, nextUrl }: ModeToggleProps) => {
           ${isEnjoyMode ? "bg-red-400" : "bg-green-500"} 
         `}
       >
-        {/* 装飾テキスト（左が休、右が巡） */}
-        <div className="absolute inset-0 flex justify-between items-center px-2 opacity-40 text-white text-[10px] font-bold">
-          <span>休</span>
-          <span>巡</span>
-        </div>
       </div>
 
       {/* 2. 動く丸（ノブ） */}
