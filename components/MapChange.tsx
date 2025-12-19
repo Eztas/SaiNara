@@ -41,7 +41,7 @@ export const ModeToggle = ({ isEnjoyMode, nextUrl }: ModeToggleProps) => {
   );
 };
 
-export const MapChange = ({ lat, lng, targetTime }: { lat: number, lng: number, targetTime: string }) => {
+export const MapChange = ({ targetTime }: { targetTime: string }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
