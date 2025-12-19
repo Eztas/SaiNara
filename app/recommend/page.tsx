@@ -1,6 +1,7 @@
 // app/recommend/page.tsx
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from "next/navigation";
 import dynamic from 'next/dynamic';
@@ -168,12 +169,26 @@ export default function SpotSearchPage() {
         <div className="absolute bottom-6 left-4 right-4 z-10 pointer-events-none">
             <div className="mx-auto max-w-xl bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-200 pointer-events-auto">
                 <h2 className="font-bold text-lg text-gray-800 flex items-center gap-2">
-                  <MapPin className="text-red-500" size={18} />
                   {result.name}
                 </h2>
-                <p className="text-sm text-gray-600 mt-1 max-h-24 overflow-y-auto">
-                  {reason}
-                </p>
+                <div className="flex items-start gap-3 mt-2">
+                  {/* ShikAIアイコン */}
+                  <Image
+                    src="/ShikAI.png"
+                    alt="ShikAI"
+                    width={48}
+                    height={48}
+                    className="rounded-full shadow-sm flex-shrink-0"
+                    priority
+                  />
+
+                  {/* 吹き出し */}
+                  <div className="relative bg-gray-100 rounded-2xl px-4 py-2 text-sm text-gray-700 max-w-sm">
+                    {/* 吹き出しのしっぽ */}
+                    <span className="absolute left-[-6px] top-4 w-3 h-3 bg-gray-100 rotate-45" />
+                    {reason}
+                  </div>
+                </div>
             </div>
         </div>
       </div>

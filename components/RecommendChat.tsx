@@ -1,5 +1,5 @@
 // app/components/RecommendChat.tsx
-
+import Image from 'next/image';
 import { Search } from 'lucide-react';
 
 type RecommendChatProps = {
@@ -11,9 +11,28 @@ type RecommendChatProps = {
 export const RecommendChat = ({ input, setInput, handleSearch }: RecommendChatProps) => {
     return (
         <div className="flex flex-col items-center justify-center h-[100dvh] bg-gray-50 p-4">
-            <div className="w-full max-w-2xl text-center mb-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">S-AI ナラ</h1>
-                <p className="text-gray-500">あなたの要望に合わせて、SuperなAIが奈良のスポットをご提案します</p>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 w-full max-w-3xl px-4">
+                {/* 画像ブロック */}
+                <div className="flex-shrink-0">
+                    <Image
+                        src="/ShikAI.png" // publicフォルダ内の画像パスを指定
+                        alt="ShikAIのアイコン"
+                        width={120} // 表示したい幅（px）
+                        height={120} // 表示したい高さ（px）
+                        className="rounded-2xl shadow-sm object-cover" // お好みでスタイルを調整
+                        priority // ファーストビューに入る重要な画像なので優先的に読み込む
+                    />
+                </div>
+
+                {/* テキストブロック */}
+                <div className="text-center md:text-left">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2 leading-tight">
+                        S-AI
+                    </h1>
+                    <p className="text-gray-500">
+                        S-AIがひらく、奈良の新たな視界
+                    </p>
+                </div>
             </div>
 
             <div className="w-full max-w-2xl bg-white p-2 rounded-xl shadow-lg border border-gray-200 flex gap-2 items-center">
