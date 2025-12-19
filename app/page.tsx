@@ -117,10 +117,10 @@ export default function Home() {
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-[#f8f5e3] px-4 py-6 font-sans text-stone-800">
       <main className="w-full max-w-md space-y-8 rounded-2xl bg-white/80 p-8 shadow-xl backdrop-blur-sm ring-1 ring-stone-900/5 transition-all">
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-3xl font-bold tracking-tight text-stone-900">
+          <h1 className="text-4xl font-bold tracking-tight text-stone-900">
             Ψナラ 👋
           </h1>
-          <p className="text-center text-stone-600">
+          <p className="text-center text-stone-600 font-semibold">
             奈良旅行にΨ高のラストワンマイルを
           </p>
         </div>
