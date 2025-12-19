@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     `;
 
     const response = await genAI.models.generateContent({
-        model: process.env.GEMMINI_AI_MODEL || "gemini-3-flash",
+        model: process.env.GEMINI_AI_MODEL || "gemini-3-flash",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
