@@ -8,7 +8,8 @@ import { Wifi, TicketSlash, Building } from "lucide-react";
 
 import { FilterEnjoyMarkerState, FilterEnjoyTagState, applyTagFilters } from "@/components/EnjoyMarkersFilter";
 import { naraSouvenirSpots } from "@/data/naraSouvenirSpots"; 
-import { createGiftIcon } from '@/components/MarkerIcons'
+import { naraSightSeeingSpots } from "@/data/naraSightSeeingSpots"; 
+import { createGiftIcon, createLandmarkIcon } from '@/components/MarkerIcons'
 import type { EnjoySpot } from "@/types/map";
 
 const EnjoyMarker = ({
@@ -81,6 +82,10 @@ export const EnjoyMarkers = ({
     () => applyTagFilters(naraSouvenirSpots, tagFilters),
     [tagFilters]
   );
+  const filteredightSeeingSpots  = useMemo(
+    () => applyTagFilters(naraSightSeeingSpots, tagFilters),
+    [tagFilters]
+  );
 
   return (
     <>
@@ -88,6 +93,12 @@ export const EnjoyMarkers = ({
         <EnjoyMarker 
           enjoySpots={filteredSouvenirSpots} 
           createIcon={createGiftIcon} 
+        />
+      )}
+      {markerFilters.sightseeing && (
+        <EnjoyMarker 
+          enjoySpots={filteredightSeeingSpots} 
+          createIcon={createLandmarkIcon} 
         />
       )}
     </>

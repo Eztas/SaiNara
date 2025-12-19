@@ -1,11 +1,12 @@
 // components/EnjoyMarkersFilter.tsx
 "use client";
 
-import { Building, Gift, TicketSlash, Wifi, X } from "lucide-react";
+import { Building, Gift, TicketSlash, Wifi, X, Landmark } from "lucide-react";
 
 // マーカーフィルター（データソース）
 export type FilterEnjoyMarkerState = {
   souvenir: boolean;
+  sightseeing: boolean;
 };
 
 // タグフィルター（機能）
@@ -55,6 +56,20 @@ export const MarkersFilter = ({
               checked={markerFilters.souvenir}
               onChange={() => onToggleMarker("souvenir")}
               className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
+            />
+          </label>
+          <label className="flex items-center justify-between cursor-pointer group">
+            <div className="flex items-center gap-2 text-gray-700">
+              <div className="bg-violet-100 p-1.5 rounded-full text-violet-600">
+                <Landmark size={16} />
+              </div>
+              <span className="text-sm font-medium">観光地</span>
+            </div>
+            <input
+              type="checkbox"
+              checked={markerFilters.sightseeing}
+              onChange={() => onToggleMarker("sightseeing")}
+              className="w-5 h-5 rounded border-gray-300 text-violet-600 focus:ring-violet-500"
             />
           </label>
         </div>

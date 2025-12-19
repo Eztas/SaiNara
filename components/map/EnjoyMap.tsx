@@ -16,6 +16,7 @@ export const EnjoyMap = () => {
   // マーカーフィルター状態
   const [markerFilters, setMarkerFilters] = useState<FilterEnjoyMarkerState>({
     souvenir: true,
+    sightseeing: true,
   });
   const toggleMarkerFilter = (key: keyof FilterEnjoyMarkerState) => {
     setMarkerFilters((prev) => ({ ...prev, [key]: !prev[key] }));

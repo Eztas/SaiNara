@@ -1,7 +1,7 @@
 // data/naraSightseeingSpots.ts
 import { EnjoySpot } from '@/types/map'; // 型定義のパスに合わせて変更してください
 
-export const souvenirSpots: EnjoySpot[] = [
+export const naraSightSeeingSpots: EnjoySpot[] = [
     {
     id: "1",
     name: "小西さくら通り商店街",
