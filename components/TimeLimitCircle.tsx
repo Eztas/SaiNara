@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { Circle } from "react-leaflet";
 
+import { calculateRadiusFromTime } from "@/lib/utils";
+
 type TimeLimitCircleProps = {
   center: [number, number];
   targetTime: string; // "1430などの4桁で14:30という時間を示す"
@@ -14,20 +16,11 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
   // 時間から半径を計算するロジック（親から移動）
   useEffect(() => {
     const calcRadiusFromTime = () => {
-      const now = new Date();
-      const target = new Date();
-      const hours = parseInt(targetTime.slice(0, 2), 10);
-      const minutes = parseInt(targetTime.slice(2, 4), 10);
-
-      target.setHours(hours, minutes, 0, 0);
-
-      const diffSeconds = (target.getTime() - now.getTime()) / 1000;
+      // ゆっくり歩く、直線距離でないことを考慮して、歩行速度を50m/分に設定
+      const {remainingMinutes, calcRadius} = calculateRadiusFromTime(targetTime, 50);
       
-      if (diffSeconds > 0) {
-        const remainingMinutes = diffSeconds / 60;
-        const calcRadius = remainingMinutes * 60; 
+      if (remainingMinutes > 0) {
         setRadius(calcRadius);
-
         // 色の判定
         if (remainingMinutes >= 30) {
           setColor("blue");
