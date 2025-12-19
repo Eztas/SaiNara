@@ -12,24 +12,22 @@ type TimeLimitCircleProps = {
 export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) => {
   const [radius, setRadius] = useState(500);
   const [color, setColor] = useState("blue");
-  const [urgency, setUrgency] = useState<"calm" | "warning" | "urgent">("calm");
-  const [blink, setBlink] = useState(false);
+  const [remainingMinutes, setRemainingMinutes] = useState(30);
+  const [ripples, setRipples] = useState<number[]>([0, 0.33, 0.66]); // 3つの波紋
 
   useEffect(() => {
     const calcRadiusFromTime = () => {
-      const {remainingMinutes, calcRadius} = calculateRadiusFromTime(targetTime, 50);
+      const {remainingMinutes: mins, calcRadius} = calculateRadiusFromTime(targetTime, 50);
       
-      if (remainingMinutes > 0) {
+      if (mins > 0) {
         setRadius(calcRadius);
-        if (remainingMinutes >= 30) {
+        setRemainingMinutes(mins);
+        if (mins >= 30) {
           setColor("blue");
-          setUrgency("calm");
-        } else if (remainingMinutes >= 15) {
+        } else if (mins >= 15) {
           setColor("#ffd700"); 
-          setUrgency("warning");
         } else {
           setColor("red");
-          setUrgency("urgent");
         }
       } else {
         setRadius(0);
@@ -37,37 +35,50 @@ export const TimeLimitCircle = ({ center, targetTime }: TimeLimitCircleProps) =>
     };
 
     calcRadiusFromTime();
-    const interval = setInterval(calcRadiusFromTime, 10 * 1000);
+    const interval = setInterval(calcRadiusFromTime, 20 * 1000);
 
     return () => clearInterval(interval);
   }, [targetTime]); 
 
-  // 緊急時は点滅
+  // 波紋アニメーション（時間が迫るほど速く）
   useEffect(() => {
-    if (urgency === "urgent") {
-      const blinkInterval = setInterval(() => {
-        setBlink(prev => !prev);
-      }, 500); // 0.5秒ごと
+    const speed = remainingMinutes < 15 ? 30 : remainingMinutes < 30 ? 50 : 80;
+    
+    const rippleInterval = setInterval(() => {
+      setRipples(prev => prev.map(r => (r + 0.01) % 1));
+    }, speed);
 
-      return () => clearInterval(blinkInterval);
-    } else {
-      setBlink(false);
-    }
-  }, [urgency]);
-
-  const fillOpacity = urgency === "urgent" && blink ? 0.3 : 0.1;
-  const weight = urgency === "urgent" && blink ? 3 : 2;
+    return () => clearInterval(rippleInterval);
+  }, [remainingMinutes]);
 
   return (
-    <Circle
-      center={center}
-      radius={radius}
-      pathOptions={{
-        color: color,
-        fillColor: color,
-        fillOpacity: fillOpacity,
-        weight: weight,
-      }}
-    />
+    <>
+      {/* メインの円 */}
+      <Circle
+        center={center}
+        radius={radius}
+        pathOptions={{
+          color: color,
+          fillColor: color,
+          fillOpacity: 0.1,
+          weight: 2,
+        }}
+      />
+      
+      {/* 波紋エフェクト */}
+      {ripples.map((phase, i) => (
+        <Circle
+          key={i}
+          center={center}
+          radius={radius * (0.7 + 0.3 * phase)} // 70%から100%に拡大
+          pathOptions={{
+            color: color,
+            fillColor: "transparent",
+            weight: 2,
+            opacity: 0.5 * (1 - phase), // 外に行くほど薄く
+          }}
+        />
+      ))}
+    </>
   );
 };
