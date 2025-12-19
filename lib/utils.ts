@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { RestSpot } from "@/types/map";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -25,4 +27,34 @@ export const calculateRadiusFromTime = (targetTime: string, walkingSpeed: number
   const calcRadius = remainingMinutes * walkingSpeed; 
 
   return { remainingMinutes, calcRadius };
+};
+
+// ハーサイン距離を計算する関数
+export const getDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+  const R = 6371000; // 地球の半径 (m)
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+export const filterSpotsInCircle = (
+  allSpots: RestSpot[],
+  centerLat: number,
+  centerLng: number,
+  targetTime: string
+): RestSpot[] => {
+  const {remainingMinutes, calcRadius} = calculateRadiusFromTime(targetTime, 50);
+  
+  if (calcRadius <= 0) return []; // 時間切れなら空
+
+  return allSpots.filter((spot) => {
+    const dist = getDistance(centerLat, centerLng, spot.lat, spot.lng);
+    return dist <= calcRadius;
+  });
 };
