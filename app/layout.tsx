@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     telephone: false, // 緯度経度が電話番号と認識されるのを防ぐ
   },
   icons: {
-    icon: '/ShikAI.png', // publicフォルダ内のパス
-    apple: '/ShikAI.png', // スマホ用も設定する場合
+    icon: '/SaiNara.png', // publicフォルダ内のパス
+    apple: '/SaiNara.png', // スマホ用も設定する場合
   },
 };
 
