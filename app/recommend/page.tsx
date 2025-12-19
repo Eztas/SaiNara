@@ -1,15 +1,15 @@
 // app/recommend/page.tsx
 'use client';
 
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { useSearchParams } from "next/navigation";
+import { ArrowLeft, Loader2 } from 'lucide-react'; // アイコンを追加
 import dynamic from 'next/dynamic';
-import { MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
+import Image from 'next/image';
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from 'react';
 
 import { RecommendChat } from '@/components/RecommendChat';
-import { RestSpot } from '@/types/map';
 import { parseCoords, parseTime } from '@/lib/validation';
+import { RestSpot } from '@/types/map';
 
 // 地図コンポーネントを動的インポート
 const BaseMap = dynamic(() => import('@/components/map/BaseMap'), {
@@ -29,7 +29,7 @@ const RecommendMarker = dynamic(
 
 const STORAGE_KEY = 'recommend_spot_data';
 
-export default function SpotSearchPage() {
+function SearchContent() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState<RestSpot | null>(null);
   const [reason, setReason] = useState<string | null>(null);
@@ -200,5 +200,18 @@ export default function SpotSearchPage() {
   // ----------------------------------------------------------------
   return (
     <RecommendChat input={input} setInput={setInput} handleSearch={handleSearch} />
+  );
+}
+
+export default function SpotSearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white">
+        <Loader2 className="animate-spin mr-2" />
+        Loading...
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
