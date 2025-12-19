@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   const genAI = new GoogleGenAI({ apiKey });
   try {
     // クライアントから送られてきたメッセージを取得
-    const { query } = await request.json();
+    const { query, centerLat, centerLng, targetTime } = await request.json();
 
     if (!query) {
       return NextResponse.json(
@@ -22,26 +22,40 @@ export async function POST(request: Request) {
     }
 
     const prompt = `
-    あなたは奈良の観光ガイドAIです。
-    提供されたスポットデータの中から、ユーザーの要望に最も合致するスポットを1つだけ選び出し、そのJSONデータをそのまま返してください。
-    
-    # ルール
-    - 該当するスポットがない場合は null を返してください。
-    - 出力はJSONのみとしてください。解説は不要です。
-    - ユーザーの意図（「休憩したい」「充電したい」「Wi-Fiが欲しい」など）をタグや説明から推測してください。
+      あなたは奈良の観光ガイドAIです。
+      以下の条件を必ず厳守してください。
 
-    # 出力フォーマット（厳守）
-    以下のJSON形式のみを出力してください。Markdownや解説は不要です。
+      # 目的
+      ユーザーの要望に最も合致する「1つのスポット」を選びます。
 
-    {
-      "reason": "ユーザーへの推奨理由（30文字〜50文字程度の日本語。親しみやすい口調で。）",
-      "spot": { ...選んだスポットのデータそのもの... }
-    }
-    # スポットデータリスト
-    ${JSON.stringify(allNaraRestSpots)}
+      # 制約（重要）
+      - あなたが選んでよいスポットは、以下の【スポットデータリスト】に含まれるもののみです
+      - 中心座標 (centerLat, centerLng) から「徒歩で到達可能な範囲」にあるスポットのみを選んでください
+      - 徒歩可能範囲は、targetTime までの残り時間から判断してください
+      - 徒歩可能範囲の計算は、旅行終わり終盤で疲れていること、道が曲がりくねっていることを考慮し、歩行速度を50m/分として計算してください
+      - 徒歩で到達できないと判断したスポットは、どれだけ魅力的でも絶対に選ばないでください
+      - 条件を満たすスポットが1つもない場合は、spot を null にして、なぜないのかをreasonに説明してください
 
-    # ユーザーの要望
-    ${query}
+      # 出力ルール
+      - 出力は **JSONのみ**
+      - Markdown、説明文、コメントは禁止
+      - フォーマットは必ず以下に一致させてください
+
+      {
+        "reason": "ユーザーへの推奨理由（30〜50文字程度、日本語、親しみやすい口調）",
+        "spot": { ...スポットのJSONデータ... } または null
+      }
+
+      # 中心情報
+      - centerLat: ${centerLat}
+      - centerLng: ${centerLng}
+      - targetTime: ${targetTime}
+
+      # スポットデータリスト
+      ${JSON.stringify(allNaraRestSpots)}
+
+      # ユーザーの要望
+      ${query}
     `;
 
     const response = await genAI.models.generateContent({

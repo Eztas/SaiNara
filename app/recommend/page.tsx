@@ -2,11 +2,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from "next/navigation";
 import dynamic from 'next/dynamic';
 import { MapPin, Loader2, ArrowLeft } from 'lucide-react'; // アイコンを追加
 
 import { RecommendChat } from '@/components/RecommendChat';
 import { RestSpot } from '@/types/map';
+import { parseCoords, parseTime } from '@/lib/validation';
 
 // 地図コンポーネントを動的インポート
 const BaseMap = dynamic(() => import('@/components/map/BaseMap'), {
@@ -29,6 +31,7 @@ export default function SpotSearchPage() {
   const [result, setResult] = useState<RestSpot | null>(null);
   const [reason, setReason] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
 
   const handleSearch = async () => {
     if (!input.trim()) return;
@@ -36,6 +39,19 @@ export default function SpotSearchPage() {
     setLoading(true);
     setResult(null);
     setReason(null);
+  
+    // URLパラメータを取得（なければデフォルト値を設定）
+    // 例: /map?lat=34.6841376&lng=135.8285414&time=1830
+    const latParam = searchParams.get("lat");
+    const lngParam = searchParams.get("lng");
+    const timeParam = searchParams.get("time");
+  
+    // デフォルト: 近鉄奈良駅
+    const lat = parseCoords(latParam, 34.6841376);
+    const lng = parseCoords(lngParam, 135.8285414);
+    
+    // デフォルト: "1800" (18:00)
+    const targetTime = parseTime(timeParam, "1800");
 
     try {
       const res = await fetch('/api/recommend', {
@@ -43,7 +59,12 @@ export default function SpotSearchPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: input }),
+        body: JSON.stringify({ 
+          query: input,
+          centerLat: lat,
+          centerLng: lng,
+          targetTime
+        }),
       });
 
       if (!res.ok) {
@@ -51,15 +72,17 @@ export default function SpotSearchPage() {
       }
 
       const data = await res.json();
-      setResult(data.spot);
-      setReason(data.reason);
+      if (data.spot) {
+        setResult(data.spot);
+        setReason(data.reason);
+      } else {
+        // スポットが見つからなかった場合（APIが空を返した、徒歩範囲以外の場合など）
+        alert(`該当するスポットが見つかりませんでした。別の要望でお試しください。理由: ${data.reason || ''}`);
+      }
 
     } catch (e) {
       alert("検索に失敗しました。もう一度お試しください。");
     } finally {
-      if (result === null){
-        alert(`該当するスポットが見つかりませんでした。別の要望でお試しください。${reason}`);
-      }
       setLoading(false);
     }
   };
