@@ -36,6 +36,11 @@ function SearchContent() {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
 
+  const timeParam = searchParams.get("time");
+  
+  // デフォルト: "1800" (18:00)
+  const targetTime = parseTime(timeParam, "1800");
+
   useEffect(() => {
     // windowオブジェクトが存在するか確認（Next.jsのお作法）
     if (typeof window !== 'undefined') {
@@ -154,7 +159,7 @@ function SearchContent() {
         </div>
 
         {/* 戻るボタン */}
-        <div className="absolute top-4 left-4 z-[1000]">
+        <div className="absolute top-4 left-4 z-[1000] flex items-center gap-3">
           <button 
             onClick={handleReset}
             className="bg-white text-gray-700 p-3 rounded-full shadow-lg border border-gray-200 hover:bg-gray-50 transition flex items-center justify-center"
@@ -163,6 +168,16 @@ function SearchContent() {
           >
               <ArrowLeft size={24} />
           </button>
+            <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200 w-fit">
+              <div className="flex items-baseline gap-2">
+                <span className="text-xs text-gray-400 font-bold uppercase tracking-wider">
+                  LIMIT
+                </span>
+                <span className="text-xs font-bold text-red-500">
+                  {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
+                </span>
+              </div>
+            </div>
         </div>
 
         {/* 画面下部にテキスト情報の簡易表示オーバーレイ */}
