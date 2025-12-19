@@ -6,6 +6,7 @@
 - TypeScript
 - leaflet: 地図ライブラリ
 - geolocationAPI: 現在地取得
+- [Gemini API](https://ai.google.dev/gemini-api/docs?hl=ja): バックエンドで呼び出し
 
 ### その他(データなど)
 - [OpenStreetMap](https://www.openstreetmap.org): 地図

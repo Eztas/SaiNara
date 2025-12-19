@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import { parseCoords, parseTime } from "@/lib/validation"
 
 // 地図コンポーネント（ssr: falseでSSR無効化）
-const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+const BaseMap = dynamic(() => import("@/components/map/BaseMap"), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -17,6 +17,11 @@ const MapComponent = dynamic(() => import("@/components/MapComponent"), {
     </div>
   ),
 });
+
+const RestMap = dynamic(
+  () => import("@/components/map/RestMap").then((mod) => mod.RestMap),
+  { ssr: false }
+);
 
 // URLパラメータ取得用のコンポーネント
 function MapContent() {
@@ -37,9 +42,9 @@ function MapContent() {
 
   return (
     <>
-      <MapComponent lat={lat} lng={lng} targetTime={targetTime} />
-      
-      {/* UIパーツ */}
+      <BaseMap>
+        <RestMap />
+      </BaseMap>
       <div className="absolute top-4 left-4 z-[1000] bg-white p-3 rounded-lg shadow-md border border-gray-200">
         <h1 className="text-lg font-bold text-gray-800">Ψなら (Beta)</h1>
         <p className="text-xs text-gray-500">
