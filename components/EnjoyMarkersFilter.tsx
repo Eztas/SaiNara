@@ -1,7 +1,7 @@
 // components/EnjoyMarkersFilter.tsx
 "use client";
 
-import { Gift, TicketSlash, Wifi, X } from "lucide-react";
+import { Building, Gift, TicketSlash, Wifi, X } from "lucide-react";
 
 // マーカーフィルター（データソース）
 export type FilterEnjoyMarkerState = {
@@ -12,6 +12,7 @@ export type FilterEnjoyMarkerState = {
 export type FilterEnjoyTagState = {
   wifi: boolean;
   free: boolean;
+  indoor: boolean;
 };
 
 type MarkersFilterProps = {
@@ -81,7 +82,7 @@ export const MarkersFilter = ({
           <label className="flex items-center justify-between cursor-pointer group">
             <div className="flex items-center gap-2 text-gray-700">
               <div className="bg-green-50 p-1.5 rounded-full text-green-600">
-                <TicketSlash size={16} className="fill-green-600" />
+                <TicketSlash size={16}/>
               </div>
               <span className="text-sm">入場料無料</span>
             </div>
@@ -90,6 +91,21 @@ export const MarkersFilter = ({
               checked={tagFilters.free}
               onChange={() => onToggleTag("free")}
               className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500"
+            />
+          </label>
+
+          <label className="flex items-center justify-between cursor-pointer group">
+            <div className="flex items-center gap-2 text-gray-700">
+              <div className="bg-amber-50 p-1.5 rounded-full text-amber-600">
+                <Building size={16} />
+              </div>
+              <span className="text-sm">屋内</span>
+            </div>
+            <input
+              type="checkbox"
+              checked={tagFilters.indoor}
+              onChange={() => onToggleTag("indoor")}
+              className="w-5 h-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
             />
           </label>
         </div>

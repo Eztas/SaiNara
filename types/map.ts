@@ -18,6 +18,7 @@ export type RestTags = {
 export type EnjoyTags = {
   wifi: boolean; // フリーwifiがあるかどうか
   free: boolean; // 入場料無料か(実質何かを購入しなくて済むか)
+  indoor: boolean; // 屋内施設かどうか
 };
 
 // 休憩地点の型

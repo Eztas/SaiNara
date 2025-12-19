@@ -24,6 +24,7 @@ export const EnjoyMap = () => {
   const [tagFilters, setTagFilters] = useState<FilterEnjoyTagState>({
     wifi: false,
     free: false,
+    indoor: false,
   });
   const toggleTagFilter = (key: keyof FilterEnjoyTagState) => {
     setTagFilters((prev) => ({ ...prev, [key]: !prev[key] }));

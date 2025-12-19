@@ -4,7 +4,7 @@
 import { Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useMemo } from "react";
-import { Wifi, TicketSlash } from "lucide-react";
+import { Wifi, TicketSlash, Building } from "lucide-react";
 
 import { FilterEnjoyMarkerState, FilterEnjoyTagState, applyTagFilters } from "@/components/EnjoyMarkersFilter";
 import { naraSouvenirSpots } from "@/data/naraSouvenirSpots"; 
@@ -51,8 +51,13 @@ const EnjoyMarker = ({
                   </span>
                 )}
                 {spot.tags.free && (
-                  <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full flex items-center gap-1">
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full flex items-center gap-1">
                     <TicketSlash size={12} /> 入場料無料
+                  </span>
+                )}
+                {spot.tags.indoor && (
+                  <span className="px-2 py-1 bg-amber-100 text-amber-700 rounded-full flex items-center gap-1">
+                    <Building size={12} /> 屋内
                   </span>
                 )}
               </div>

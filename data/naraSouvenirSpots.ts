@@ -16,6 +16,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: true,
       free: true, // 入館無料
+      indoor: true,
     },
     url: "https://www.worldheritage.co.jp/nagomi/souvenir/",
     time: ["0930", "1630"],
@@ -31,6 +32,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: true,
       free: true,
+      indoor: true,
     },
     url: "https://kansaionepass.com/ja/article/detail/394",
     time: ["1000", "2100"],
@@ -46,6 +48,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: false, // 公衆Wifiはあるが店舗固有は場所による
       free: true,
+      indoor: true,
     },
     url: "https://kintetsu-rs.com/station/timesplace/nara/",
     time: ["0900", "2000"],
@@ -61,6 +64,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: true, // 公衆Wifiはあるが店舗固有は場所による
       free: true,
+      indoor: true,
     },
     url: "https://www.nakoservice.co.jp/shop.html",
     time: ["1000", "1830"],
@@ -76,6 +80,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: false,
       free: true,
+      indoor: true,
     },
     url: "https://www.nakoservice.co.jp/shop.html",
     time: ["0900", "1800"],
@@ -91,6 +96,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: false,
       free: true,
+      indoor: true,
     },
     time: ["1000", "1830"],
   },
@@ -108,6 +114,7 @@ export const naraSouvenirSpots: EnjoySpot[] = [
     tags: {
       wifi: false,
       free: true,
+      indoor: true,
     },
     url: "http://www.nakatanidou.jp/",
     time: ["1000", "1900"],
