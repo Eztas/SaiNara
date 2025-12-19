@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 import { parseCoords, parseTime } from "@/lib/validation"
+import { MapChange } from "@/components/MapChange";
 
 // 地図コンポーネント（ssr: falseでSSR無効化）
 const BaseMap = dynamic(() => import("@/components/map/BaseMap"), {
@@ -45,13 +46,7 @@ function MapContent() {
       <BaseMap>
         <RestMap />
       </BaseMap>
-      <div className="absolute top-4 left-4 z-[1000] bg-white p-3 rounded-lg shadow-md border border-gray-200">
-        <h1 className="text-lg font-bold text-gray-800">Ψなら (Beta)</h1>
-        <p className="text-xs text-gray-500">
-          目的地: {lat.toFixed(4)}, {lng.toFixed(4)}<br/>
-          リミット: {targetTime.slice(0, 2)}:{targetTime.slice(2, 4)}
-        </p>
-      </div>
+      <MapChange lat={lat} lng={lng} targetTime={targetTime} />
     </>
   );
 }
